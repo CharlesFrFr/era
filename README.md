@@ -8,9 +8,12 @@
 - **Resizable Window** - Resize the window to any size, and the content will scale accordingly. (was not possible with the original launcher)
 - **UI Improvements** - The UI has been improved to be more user friendly.
 
-| Current Progress                                                                                   |
+## Screenshots
+
+| Home                                                                                   |
 | -------------------------------------------------------------------------------------------------- |
-| ![Screenshot 1](https://github.com/ectrc/era/assets/13946988/11c733fc-a308-4b78-bf62-c2a2c79e1226) |
+| ![Screenshot 1](https://github.com/ectrc/era/assets/13946988/a229a897-2fec-4fc9-abf9-5939a5922882) |
+
 
 ## Disclaimer
 
