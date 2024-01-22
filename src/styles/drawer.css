@@ -7,30 +7,30 @@ aside.drawer {
   background-color: var(--c2);
 }
 
-aside.drawer button.item {
+aside.drawer a.item {
   all: unset;
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 0.35rem 0.65rem;
+  padding: 0.45rem 0.65rem;
   gap: 0.5rem;
   cursor: pointer;
   color: var(--t3);
   border-radius: 0.35rem;
 }
 
-aside.drawer button.item:hover {
+aside.drawer a.item:hover {
   background-color: #a5abfd10;
   color: var(--t2);
 }
 
-aside.drawer button.item.active {
+aside.drawer a.item.now {
   background-color: #a5abfd20;
   color: var(--t1);
   font-weight: 600;
 }
 
-aside.drawer button.item .icon {
+aside.drawer a.item .icon {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -38,12 +38,16 @@ aside.drawer button.item .icon {
   height: 1rem;
 }
 
-aside.drawer button.item .icon svg {
+aside.drawer a.item .icon svg {
   width: 100%;
   height: 100%;
   fill: var(--t3);
 }
 
-aside.drawer button.item span.text {
+aside.drawer a.item.now .icon svg {
+  fill: var(--t1);
+}
+
+aside.drawer a.item span.text {
   font-size: 1rem;
 }

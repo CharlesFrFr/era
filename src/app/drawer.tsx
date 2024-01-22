@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 
 import * as Icons from "react-icons/fa6";
 import "src/styles/drawer.css";
@@ -22,17 +22,16 @@ type DrawerItemProps = {
 };
 
 const DrawerItem = (props: DrawerItemProps) => {
-  const navigate = useNavigate();
   const Icon = Icons[props.icon];
 
-  const handleClick = () => {
-    navigate({
-      to: props.path,
-    });
-  };
-
   return (
-    <Link className="item" onClick={handleClick}>
+    <Link
+      className="item"
+      to={props.path}
+      activeProps={{
+        className: "item now",
+      }}
+    >
       <div className="icon">
         <Icon />
       </div>
