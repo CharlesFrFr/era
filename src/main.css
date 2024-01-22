@@ -29,7 +29,7 @@
   --font-body: "Inter", sans-serif;
 
   font-family: var(--font-body);
-  font-weight: 500;
+  font-weight: 400;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -57,4 +57,27 @@ html,
 
 .children {
   flex: 1;
+}
+
+button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4rem 0.5rem;
+  font-weight: 500;
+  font-family: var(--font-header);
+  cursor: pointer;
+  border: none;
+  border-radius: 0.4rem;
+  background-color: transparent;
+  transition: background-color 50ms, scale 50ms;
+}
+
+button:hover {
+  background-color: #00000050;
+}
+
+button:active {
+  scale: 0.95;
 }

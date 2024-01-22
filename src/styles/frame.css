@@ -27,7 +27,7 @@ main.frame s {
   margin-left: auto;
 }
 
-main.frame button {
+main.frame nav > button {
   all: unset;
   display: flex;
   flex-direction: row;
@@ -37,12 +37,12 @@ main.frame button {
   border-radius: 0.25rem;
 }
 
-main.frame button:hover {
+main.frame nav > button:hover {
   background-color: var(--c1);
   cursor: pointer;
 }
 
-main.frame button svg {
+main.frame nav button > svg {
   width: 1rem;
   height: 1rem;
   fill: var(--t2);

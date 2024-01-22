@@ -1,0 +1,40 @@
+.banner {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0.25rem 0.65rem;
+  gap: 0.25rem;
+  width: 100%;
+  min-width: max-content;
+  min-height: 2rem;
+  user-select: none;
+  border-radius: 0.65rem;
+  background-color: var(--c0);
+  background-image: radial-gradient(
+    circle at 50% -50%,
+    #ae56e9 0%,
+    #6a5bec 100%
+  );
+}
+
+.banner > * {
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--t1);
+}
+
+.banner > b {
+  font-weight: 600;
+}
+
+.banner > s {
+  margin-left: auto;
+  width: 2rem;
+}
+
+.banner > code {
+  padding: 0.15rem 0.25rem;
+  font-family: var(--font-code);
+  border-radius: 0.25rem;
+  background-color: #00000050;
+}
