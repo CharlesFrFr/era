@@ -4,16 +4,15 @@
 
 ## Features
 
-- **Freemium** - Customise to your liking, with the ability to change the themes without having to purchase premium.
-- **Resizable Window** - Resize the window to any size, and the content will scale accordingly. (was not possible with the original launcher)
-- **UI Improvements** - The UI has been improved to be more user friendly.
+- **Freemium** Customise to your liking, with the ability to change the themes without having to purchase premium.
+- **Resizable Window** Resize the window to any size, and the content will scale accordingly. (was not possible with the original launcher)
+- **UI Improvements** The UI has been improved to be more user friendly.
 
 ## Screenshots
 
-| Home                                                                                   |
+| Home                                                                                               |
 | -------------------------------------------------------------------------------------------------- |
 | ![Screenshot 1](https://github.com/ectrc/era/assets/13946988/a229a897-2fec-4fc9-abf9-5939a5922882) |
-
 
 ## Disclaimer
 

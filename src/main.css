@@ -81,3 +81,18 @@ button:hover {
 button:active {
   scale: 0.95;
 }
+
+section.app {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+section.app .page {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  gap: 0.5rem;
+}
