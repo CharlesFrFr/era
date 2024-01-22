@@ -1,0 +1,149 @@
+.stats {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 4rem;
+  transition: margin-top 100ms;
+}
+
+.stats .row {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  user-select: none;
+}
+
+.stats .row .stat {
+  display: flex;
+  flex-direction: row;
+  padding: 0.75rem;
+  gap: 3rem;
+  min-width: max-content;
+  border-radius: 0.45rem;
+  background-color: var(--c0);
+}
+
+.stats .row .stat.equal {
+  width: 100%;
+}
+
+.stats .row .stat .information {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.stats .row .stat .information span.value {
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+.stats .row .stat .information small.description {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--t3);
+}
+
+.stats .row .stat .icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  height: 100%;
+  width: 2.5rem;
+  /* background-color: red; */
+}
+
+.stats .row .stat .icon svg {
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.stats .row .stat .icon.red svg {
+  fill: var(--r0);
+}
+
+.stats .row .stat .icon.yellow svg {
+  fill: var(--y0);
+}
+
+.stats .row .stat .icon.blue svg {
+  fill: var(--b0);
+}
+
+.stats .row .stat .icon.purple svg {
+  fill: var(--p0);
+}
+
+@container app (width < 815px) {
+  .row {
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .row .stat {
+    width: min-content !important;
+    flex: 1;
+  }
+}
+
+.stats .row .stat.user {
+  position: relative;
+  padding: 1rem;
+  padding-left: 10rem;
+  min-height: 6rem;
+  width: 100%;
+  min-width: 0;
+  gap: 1rem;
+}
+
+.stats .row .stat.user .character {
+  position: absolute;
+  height: 10rem;
+  left: 0;
+  bottom: 0;
+  transform: scaleX(-1);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  transition: opacity 50ms;
+}
+
+.stats .row .stat.user .welcome {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.stats .row .stat.user .welcome h4 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  font-family: var(--font-header);
+}
+
+.stats .row .stat.user .welcome p {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--t2);
+}
+
+.stats .row .stat.user .welcome p strong {
+  color: var(--t1);
+  font-weight: 600;
+}
+
+@container app (width < 500px) {
+  .row .stat.user {
+    padding-left: 1rem !important;
+  }
+
+  .row .stat.user .character {
+    opacity: 0;
+    user-select: none;
+    pointer-events: none;
+  }
+
+  .stats {
+    margin-top: 0.5rem !important;
+  }
+}

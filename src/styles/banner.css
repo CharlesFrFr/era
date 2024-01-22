@@ -1,12 +1,10 @@
 .banner {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
-  padding: 0.25rem 0.65rem;
-  gap: 0.25rem;
+  padding: 0.5rem 0.65rem;
   width: 100%;
-  min-width: max-content;
-  min-height: 2rem;
   user-select: none;
   border-radius: 0.65rem;
   background-color: var(--c0);
@@ -17,22 +15,27 @@
   );
 }
 
-.banner > * {
+.banner * {
   font-size: 0.85rem;
   font-weight: 400;
   color: var(--t1);
+  max-height: 2rem;
 }
 
-.banner > b {
+.banner p {
+  width: 100%;
+}
+
+.banner b {
   font-weight: 600;
 }
 
-.banner > s {
+.banner s {
   margin-left: auto;
   width: 2rem;
 }
 
-.banner > code {
+.banner code {
   padding: 0.15rem 0.25rem;
   font-family: var(--font-code);
   font-size: 0.75rem;

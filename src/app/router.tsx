@@ -1,10 +1,10 @@
 import {
+  Route,
   RootRoute,
-  Router,
   NotFoundRoute,
+  Router,
   Navigate,
   Outlet,
-  Route,
 } from "@tanstack/react-router";
 
 import TauriFrame from "src/app/frame";
@@ -35,7 +35,9 @@ const appRoute = new Route({
       <Drawer />
       <div className="children page">
         <VersionBanner />
-        <Outlet />
+        <div className="children">
+          <Outlet />
+        </div>
       </div>
     </section>
   ),

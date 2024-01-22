@@ -37,12 +37,18 @@
   --c0: #0d121d;
   --c1: #111827;
   --c2: #151c2b;
-  --c3: #1a1f2f;
+  --c3: #161d2a;
+  --c4: #1a1f2f;
 
   --t0: #ffffff;
   --t1: #e5e7eb;
   --t2: #9ca3af;
   --t3: #5d6470;
+
+  --r0: #f43f5e;
+  --y0: #f49e0b;
+  --b0: #0e91ce;
+  --p0: #b57dee;
 }
 
 body,
@@ -53,6 +59,30 @@ html,
   overflow: hidden;
   background-color: var(--c1);
   color: var(--t1);
+}
+
+*::-webkit-scrollbar {
+  width: 1rem;
+  height: 1rem;
+}
+
+*::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-clip: padding-box;
+  border: 0.25rem solid transparent;
+  border-radius: 0.5rem;
+  background-color: #2f3a5e90;
+  min-height: 2.5rem;
+}
+
+*::-webkit-scrollbar-track {
+  border: 0.25rem solid transparent;
+  background-clip: padding-box;
+  border-radius: 0.5rem;
+  background-color: var(--c0);
 }
 
 .children {
@@ -95,4 +125,11 @@ section.app .page {
   flex-direction: column;
   padding: 1rem;
   gap: 0.5rem;
+  container: app / inline-size;
+  /* overflow-y: auto; */
+}
+
+section.app .page .children {
+  overflow-y: auto;
+  padding-right: 0.5rem;
 }
