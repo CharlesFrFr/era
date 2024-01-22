@@ -1,4 +1,4 @@
-# Era Launcher
+# ![Era](https://github.com/ectrc/era/assets/13946988/11c733fc-a308-4b78-bf62-c2a2c79e1226)
 
 > An attempt at a recreation of the Era launcher, with some improvements.
 
