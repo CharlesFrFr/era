@@ -4,9 +4,9 @@
 
 ## Features
 
-- **Freemium** Customise to your liking, with the ability to change the themes without having to purchase premium.
-- **Resizable Window** Resize the window to any size, and the content will scale accordingly. (was not possible with the original launcher)
-- **UI Improvements** All promotional content has been removed, and the user experience has been improved massively.
+- **Freemium** Customise to your liking, with the ability to change the themes without having to purchase premium. _(this cannot provide any other premium benefits)_
+- **Interface Improvements** All promotional content has been removed, new spicy fonts and icons, user experience has been improved and resizing the window is enabled with the content will scale accordingly.
+- **Blazingly Fast** Scrap Electron, meet [Tauri](https://tauri.app), a blazingly fast alternative to Electron. This launcher is built with Rust, and is much faster than the official launcher.
 
 ## Screenshots
 
@@ -16,4 +16,6 @@
 
 ## Disclaimer
 
-This is not an official launcher, and is not affiliated with Era in any way. This is simply a recreation of the launcher, with some improvements.
+Not all features are implemented.
+
+This is not an official launcher, and does not use _any_ assets made by Era. This does interact with it's API services and is not affiliated with it. This is simply a recreation of the launcher, with some improvements.

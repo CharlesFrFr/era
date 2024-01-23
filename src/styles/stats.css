@@ -4,6 +4,7 @@
   gap: 0.5rem;
   margin-top: 4rem;
   transition: margin-top 100ms;
+  min-height: max-content;
 }
 
 .stats .row {
@@ -11,6 +12,7 @@
   flex-direction: row;
   gap: 0.5rem;
   user-select: none;
+  min-height: max-content;
 }
 
 .stats .row .stat {
@@ -51,7 +53,6 @@
   margin-left: auto;
   height: 100%;
   width: 2.5rem;
-  /* background-color: red; */
 }
 
 .stats .row .stat .icon svg {
@@ -168,6 +169,7 @@
   gap: 0.25rem;
   min-width: max-content;
   width: 40%;
+  min-height: max-content;
 }
 
 .stats .row .links .stat.link {
@@ -218,9 +220,3 @@
   width: 1rem;
   fill: var(--t2);
 }
-/* 
-@container app (width < 600px) {
-  .row .stat.user {
-    background-color: red;
-  }
-} */
