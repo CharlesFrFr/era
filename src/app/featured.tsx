@@ -4,9 +4,24 @@ import "src/styles/featured.css";
 const FeaturedNews = () => {
   return (
     <section className="featured">
-      <div className="left">hello</div>
+      <FeaturedEvent />
       <FeaturedShop />
     </section>
+  );
+};
+
+const FeaturedEvent = () => {
+  return (
+    <div className="featured-event left blue-theme">
+      <div className="information">
+        <span className="header">Practise Event - Daily Trials</span>
+        <h2 className="title">PRACTICE TOURNAMENT SOLO</h2>
+        <p className="description">
+          Queue up in a tournament to test your skill! Score at least 20 points
+          in a session to earn 3000 V-Bucks!
+        </p>
+      </div>
+    </div>
   );
 };
 
