@@ -37,7 +37,8 @@
         "height": 600,
         "minWidth": 750,
         "minHeight": 380,
-        "decorations": false
+        "decorations": false,
+        "theme": "Dark"
       }
     ]
   }

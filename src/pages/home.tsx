@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import * as Icons from "react-icons/fa6";
 
 import "src/styles/pages/home.css";
@@ -20,6 +21,18 @@ const Home = () => {
                 total of <strong>127</strong> players.
               </p>
             </div>
+          </div>
+          <div className="links">
+            <StatLink
+              icon="FaBook"
+              description="Match History"
+              path="/app/profile"
+            />
+            <StatLink
+              icon="FaMedal"
+              description="Leaderboards"
+              path="/app/leaderboards"
+            />
           </div>
         </div>
         <div className="row wrap">
@@ -73,6 +86,30 @@ const EqualStat = (props: EqualStatProps) => {
         <Icon />
       </div>
     </div>
+  );
+};
+
+type StatLinkProps = {
+  icon: keyof typeof Icons;
+  description: string;
+  path: string;
+};
+
+const StatLink = (props: StatLinkProps) => {
+  const Icon = Icons[props.icon];
+
+  return (
+    <Link to={props.path} className="stat link">
+      <div className="image">
+        <Icon />
+      </div>
+      <div className="information">
+        <span className="description">{props.description}</span>
+      </div>
+      <div className="chevron">
+        <Icons.FaChevronRight />
+      </div>
+    </Link>
   );
 };
 

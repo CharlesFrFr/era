@@ -6,8 +6,7 @@
 
 - **Freemium** Customise to your liking, with the ability to change the themes without having to purchase premium.
 - **Resizable Window** Resize the window to any size, and the content will scale accordingly. (was not possible with the original launcher)
-- **Advert Free** No promotional content anywhere, just the launcher.
-- **UI Improvements** The UI has been improved to be more user friendly.
+- **UI Improvements** All promotional content has been removed, and the user experience has been improved massively.
 
 ## Screenshots
 

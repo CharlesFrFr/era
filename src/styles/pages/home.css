@@ -81,9 +81,23 @@
     justify-content: space-between;
   }
 
-  .row .stat {
-    width: min-content !important;
+  .row .stat.equal {
+    width: min-content;
     flex: 1;
+  }
+
+  .row .stat.user {
+    max-width: 100%;
+    min-width: 60%;
+  }
+
+  .row .stat.link {
+    width: 100%;
+  }
+
+  .links {
+    flex-direction: row !important;
+    width: 100% !important;
   }
 }
 
@@ -132,7 +146,7 @@
   font-weight: 600;
 }
 
-@container app (width < 500px) {
+@container app (width < 600px) {
   .row .stat.user {
     padding-left: 1rem !important;
   }
@@ -147,3 +161,66 @@
     margin-top: 0.5rem !important;
   }
 }
+
+.stats .row .links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: max-content;
+  width: 40%;
+}
+
+.stats .row .links .stat.link {
+  align-items: center;
+  padding: 0.5rem;
+  gap: 1rem;
+  flex: 1;
+  min-height: 3rem;
+  cursor: pointer;
+  transition: background-color 50ms;
+}
+
+.stats .row .links .stat.link:hover {
+  background-color: var(--c4);
+}
+
+.stats .row .links .stat.link .image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 2rem;
+}
+
+.stats .row .links .stat.link .image svg {
+  height: 1.25rem;
+  width: 1.25rem;
+  fill: var(--t2);
+}
+
+.stats .row .links .stat.link .information span {
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: var(--t2);
+}
+
+.stats .row .links .stat.link .chevron {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  height: 100%;
+  width: 2rem;
+}
+
+.stats .row .links .stat.link .chevron svg {
+  height: 1rem;
+  width: 1rem;
+  fill: var(--t2);
+}
+/* 
+@container app (width < 600px) {
+  .row .stat.user {
+    background-color: red;
+  }
+} */

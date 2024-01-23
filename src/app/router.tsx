@@ -85,7 +85,7 @@ const tree = rootRoute.addChildren([
 
 const notFoundRoute = new NotFoundRoute({
   getParentRoute: () => rootRoute,
-  component: () => <Navigate to="/app" />,
+  component: () => <Navigate to="/app/home" />,
 });
 
 const router = new Router({

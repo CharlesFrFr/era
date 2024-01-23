@@ -133,3 +133,7 @@ section.app .page .children {
   overflow-y: auto;
   padding-right: 0.5rem;
 }
+
+a[href] {
+  text-decoration: none;
+}
