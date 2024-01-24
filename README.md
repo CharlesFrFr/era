@@ -12,7 +12,7 @@
 
 | Home                                                                                        |
 | ------------------------------------------------------------------------------------------- |
-| ![image](https://github.com/ectrc/era/assets/13946988/1650cee0-293e-4dc5-a3b8-124ecc6b0447) |
+| ![image](https://github.com/ectrc/era/assets/13946988/0dd95eed-936a-47c3-909e-28f7fdf2f22d) |
 
 ## Disclaimer
 
