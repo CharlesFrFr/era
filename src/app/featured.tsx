@@ -1,25 +1,57 @@
+import { useState } from "react";
+import { useFrontend } from "src/state/frontend";
+
 import { FaClock } from "react-icons/fa6";
 import "src/styles/featured.css";
+
+import { AnimatePresence, motion } from "framer-motion";
+import FeaturedBanner from "./banner";
 
 const FeaturedNews = () => {
   return (
     <section className="featured">
-      <FeaturedEvent />
+      <EventWrapper />
       <FeaturedShop />
     </section>
   );
 };
 
-const FeaturedEvent = () => {
+const EventWrapper = () => {
+  const [selected, setSelected] = useState(1);
+  const banners = useFrontend((state) => state.banners);
+
   return (
-    <div className="featured-event left blue-theme">
-      <div className="information">
-        <span className="header">Practise Event - Daily Trials</span>
-        <h2 className="title">PRACTICE TOURNAMENT SOLO</h2>
-        <p className="description">
-          Queue up in a tournament to test your skill! Score at least 20 points
-          in a session to earn 3000 V-Bucks!
-        </p>
+    <div className="featured-event-wrapper left">
+      <AnimatePresence>
+        {banners.length > 0 && banners[selected] !== null && (
+          <motion.div
+            initial={{
+              x: 150,
+              opacity: 0,
+            }}
+            animate={{
+              x: 0,
+              opacity: 1,
+            }}
+            exit={{
+              x: -150,
+              opacity: 0,
+            }}
+            className="animate-event left"
+            key={banners[selected].banner.meta.blurhash}
+          >
+            <FeaturedBanner banner={banners[selected]} />
+          </motion.div>
+        )}
+      </AnimatePresence>
+      <div className="selector">
+        {banners.map((_, index) => (
+          <button
+            className={`selector-item ${index === selected ? "active" : ""}`}
+            onClick={() => setSelected(index)}
+            key={index}
+          />
+        ))}
       </div>
     </div>
   );
