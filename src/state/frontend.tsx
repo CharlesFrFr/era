@@ -7,19 +7,35 @@ type FrontendState = {
     precomputedBlur: React.ReactNode;
     banner: Banner;
   }[];
+  shop: {
+    daily: ShopStorefront;
+    featured: ShopStorefront;
+    unique: string;
+  };
   load: () => void;
 };
 
 export const useFrontend = create<FrontendState>((set) => ({
   banners: [],
+  shop: {
+    daily: {
+      content: [],
+      expires_at: "",
+    },
+    featured: {
+      content: [],
+      expires_at: "",
+    },
+    unique: "",
+  },
   load: async () => {
-    const [response] = await era.banners();
-
-    const newBanners = response.data.map((banner) => ({
+    const [oldBanners] = await era.banners();
+    const newBanners = oldBanners.data.map((banner) => ({
       precomputedBlur: <Blurhash hash={banner.meta.blurhash} />,
       banner,
     }));
 
-    set({ banners: newBanners });
+    const [shop] = await era.shop();
+    set({ banners: newBanners, shop: shop.data });
   },
 }));

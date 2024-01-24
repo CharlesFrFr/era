@@ -12,13 +12,34 @@ section.featured .right {
   width: 50%;
 }
 
+.featured-shop-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.shop-animate-event {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  width: 100%;
+  height: 100%;
+}
+
 section.featured .featured-shop {
+  position: relative;
   display: flex;
   flex-direction: column;
   padding: 1rem;
   padding-bottom: 0;
+  width: 100%;
   min-height: 17.5rem;
+  max-height: 17.5rem;
   user-select: none;
+  overflow: hidden;
   border-radius: 0.65rem;
   background-color: var(--c0);
 }
@@ -73,7 +94,6 @@ section.featured .featured-shop {
   display: flex;
   flex-direction: column;
   height: 100%;
-  overflow: hidden;
 }
 
 .featured-shop .cosmetic h2.name {
@@ -96,12 +116,65 @@ section.featured .featured-shop {
   width: 130%;
   height: 120%;
   translate: -50%;
-  filter: brightness(1.2);
+  filter: brightness(0.9);
   object-position: center;
   object-fit: contain;
 }
 
-@container app (width < 680px) {
+.featured-shop .purchase {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-top: auto;
+  gap: 0.35rem;
+  padding: 0.65rem 1rem;
+  width: calc(100% - 2rem);
+  min-height: 2.5rem;
+  user-select: none;
+  cursor: pointer;
+  color: var(--t2);
+  font-size: 0.9rem;
+  font-weight: 500;
+  border-radius: 0.45rem;
+  backdrop-filter: blur(1rem);
+  background-color: #00000054;
+  transition: scale 50ms;
+}
+
+.featured-shop .purchase:hover {
+  background-color: #00000064;
+}
+
+.featured-shop .purchase:active {
+  scale: 0.95;
+}
+
+.featured-shop .purchase strong {
+  font-weight: 700;
+  color: var(--t0);
+}
+
+.featured-shop .purchase span {
+  display: flex;
+  flex-direction: row;
+  gap: 0.2rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.featured-shop .purchase span p {
+  font-weight: 500;
+}
+
+.featured-shop .purchase .vbucker {
+  max-width: 1rem;
+}
+
+@container app (width < 780px) {
   section.featured {
     flex-direction: column;
   }
@@ -139,6 +212,7 @@ section.featured .animate-event {
   position: absolute;
   inset: 0;
   width: 100%;
+  height: 100%;
 }
 
 section.featured .featured-event {
@@ -279,7 +353,7 @@ section.featured .featured-event * {
   border-radius: 0.45rem;
 }
 
-.featured-event-wrapper .selector {
+.selector {
   position: absolute;
   bottom: 0;
   display: flex;
@@ -289,16 +363,16 @@ section.featured .featured-event * {
   gap: 0.25rem;
 }
 
-.featured-event-wrapper .selector .selector-item {
+.selector .selector-item {
   background-color: var(--t2);
   padding: 0.25rem;
   border-radius: 100%;
 }
 
-.featured-event-wrapper .selector .selector-item:hover {
+.selector .selector-item:hover {
   background-color: var(--t1);
 }
 
-.featured-event-wrapper .selector .selector-item.active {
+.selector .selector-item.active {
   background-color: var(--t0);
 }

@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useFrontend } from "src/state/frontend";
 
-import { FaClock } from "react-icons/fa6";
 import "src/styles/featured.css";
 
 import { AnimatePresence, motion } from "framer-motion";
-import FeaturedBanner from "./banner";
+import FeaturedBanner from "src/app/banner";
+import FeaturedShop from "./storefront";
 
 const FeaturedNews = () => {
   return (
@@ -19,6 +19,17 @@ const FeaturedNews = () => {
 const EventWrapper = () => {
   const [selected, setSelected] = useState(1);
   const banners = useFrontend((state) => state.banners);
+
+  useEffect(() => {
+    if (banners.length === 0) return;
+    const interval = setInterval(() => {
+      setSelected((s) => (s + 1) % banners.length);
+    }, 10000);
+
+    return () => clearInterval(interval);
+  }, [selected, banners]);
+
+  if (banners.length === 0) return null;
 
   return (
     <div className="featured-event-wrapper left">
@@ -52,30 +63,6 @@ const EventWrapper = () => {
             key={index}
           />
         ))}
-      </div>
-    </div>
-  );
-};
-
-const FeaturedShop = () => {
-  return (
-    <div className="featured-shop right legendary">
-      <div className="typeAndTime">
-        <label className="itemType">LEGENDARY OUTFIT</label>
-        <label className="itemTime">
-          <FaClock />
-          23:59:59
-        </label>
-      </div>
-
-      <div className="cosmetic">
-        <h2 className="name">Omen</h2>
-        <small className="description">Your victory has been foretold.</small>
-        <img
-          src="https://fortnite-api.com/images/cosmetics/br/cid_141_athena_commando_m_darkeagle/featured.png"
-          alt="Omen"
-          className="image"
-        />
       </div>
     </div>
   );
