@@ -16,6 +16,7 @@ import Home from "src/pages/home";
 import Library from "src/pages/library";
 import Servers from "src/pages/servers";
 import Shop from "src/pages/shop";
+import Developer from "src/pages/developer";
 const rootRoute = new RootRoute({
   component: function RootRoute() {
     return (
@@ -72,6 +73,12 @@ const shopRoute = new Route({
   component: Shop,
 });
 
+const developerRoute = new Route({
+  getParentRoute: () => appRoute,
+  path: "/developer",
+  component: Developer,
+});
+
 const tree = rootRoute.addChildren([
   appRoute.addChildren([
     homeRoute,
@@ -79,6 +86,7 @@ const tree = rootRoute.addChildren([
     shopRoute,
     serversRoute,
     downloadsRoute,
+    developerRoute,
   ]),
 ]);
 

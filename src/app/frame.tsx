@@ -1,8 +1,9 @@
 import { appWindow } from "@tauri-apps/api/window";
 import { useEffect } from "react";
+import { useFrontend } from "src/state/frontend";
+import { useMe } from "src/state/me";
 
 import { HiMinus, HiX } from "react-icons/hi";
-import { useFrontend } from "src/state/frontend";
 import "src/styles/frame.css";
 
 type FrameProps = {
@@ -10,9 +11,11 @@ type FrameProps = {
 };
 
 const TauriFrame = (props: FrameProps) => {
-  const load = useFrontend((state) => state.load);
+  const loadFrontend = useFrontend((state) => state.load);
+  const loadUser = useMe((state) => state.load);
   useEffect(() => {
-    load();
+    loadUser();
+    loadFrontend();
   }, []);
 
   return (

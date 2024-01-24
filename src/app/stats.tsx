@@ -1,23 +1,31 @@
+import { useMe } from "src/state/me";
+import moment from "moment";
+
 import { Link } from "@tanstack/react-router";
 import * as Icons from "react-icons/fa6";
 
 import "src/styles/stats.css";
 
 const UserStats = () => {
+  const me = useMe();
+
   return (
     <div className="stats">
       <div className="row">
         <div className="stat user">
           <img
-            src="https://fortnite-api.com/images/cosmetics/br/cid_175_athena_commando_m_celestial/icon.png"
+            src={
+              me.era.character.icon ??
+              "https://fortnite-api.com/images/cosmetics/br/cid_175_athena_commando_m_celestial/icon.png"
+            }
             alt=""
             className="character"
           />
           <div className="welcome">
-            <h4>Hi, username!</h4>
+            <h4>Hi, {me.era.username}!</h4>
             <p>
-              There are currently <strong>17</strong> players online, with a
-              total of <strong>127</strong> players.
+              There are currently <strong>0</strong> players online, with a
+              total of <strong>0</strong> players.
             </p>
           </div>
         </div>
@@ -36,25 +44,25 @@ const UserStats = () => {
       </div>
       <div className="row wrap">
         <EqualStat
-          value="0"
-          description="Total Kills"
+          value={me.stats.kdr.toString()}
+          description="Kill/Death Ratio"
           icon="FaSkull"
           color="red"
         />
         <EqualStat
-          value="0"
+          value={me.stats.wins.toString()}
           description="Lifetime Wins"
           icon="FaCrown"
           color="yellow"
         />
         <EqualStat
-          value="0"
+          value={me.stats.matches.toString()}
           description="Matches Played"
           icon="FaBook"
           color="blue"
         />
         <EqualStat
-          value="0"
+          value={moment.utc(me.stats.time * 1000).format("hh:mm:ss")}
           description="Time Played"
           icon="FaClock"
           color="purple"

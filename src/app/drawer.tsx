@@ -11,6 +11,11 @@ const Drawer = () => {
       <DrawerItem label="Shop" icon="FaCartShopping" path="/app/shop" />
       <DrawerItem label="Servers" icon="FaServer" path="/app/servers" />
       <DrawerItem label="Downloads" icon="FaDownload" path="/app/downloads" />
+      <DrawerItem
+        label="Developer"
+        icon="FaWandMagicSparkles"
+        path="/app/developer"
+      />
     </aside>
   );
 };
@@ -31,6 +36,13 @@ const DrawerItem = (props: DrawerItemProps) => {
       activeProps={{
         className: "item now",
       }}
+      style={
+        props.path === "/app/developer"
+          ? {
+              marginTop: "auto",
+            }
+          : {}
+      }
     >
       <div className="icon">
         <Icon />

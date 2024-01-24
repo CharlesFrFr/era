@@ -1,12 +1,17 @@
 import { AxiosError } from "axios";
 import { axiosClient } from "./client";
+import { useMe } from "src/state/me";
 
 type BannerResponse = {
   data: Array<Banner>;
 };
 export const banners = async () => {
   const response = await axiosClient
-    .get<BannerResponse>("/launcher/banners")
+    .get<BannerResponse>("/launcher/banners", {
+      headers: {
+        Authorization: `bearer ${useMe.getState().auth}`,
+      },
+    })
     .catch((error: AxiosError) => error);
 
   if (response instanceof AxiosError || response === null) {
@@ -89,7 +94,11 @@ type ShopResponse = {
 
 export const shop = async () => {
   const response = await axiosClient
-    .get<ShopResponse>("/launcher/shop")
+    .get<ShopResponse>("/launcher/shop", {
+      headers: {
+        Authorization: `bearer ${useMe.getState().auth}`,
+      },
+    })
     .catch((error: AxiosError) => error);
 
   if (response instanceof AxiosError || response === null) {
@@ -270,6 +279,72 @@ export const shop = async () => {
             "09b0848a44404b2abe5026205eb4e4cee5c6ef61906f45618b56b9aa4532a956",
         },
       } as ShopResponse,
+      null,
+    ] as const;
+  }
+
+  return [response.data, null] as const;
+};
+
+type UserResponse = {
+  data: User;
+};
+
+export const user = async () => {
+  const response = await axiosClient
+    .get<UserResponse>("/launcher/user", {
+      headers: {
+        Authorization: `bearer ${useMe.getState().auth}`,
+      },
+    })
+    .catch((error: AxiosError) => error);
+
+  if (response instanceof AxiosError || response === null) {
+    return [
+      {
+        data: {
+          avatar: "https://cdn.discordapp.com/avatars/1187385098271971334/",
+          character: {
+            icon: "https://fortnite-api.com/images/cosmetics/br/cid_286_athena_commando_f_neoncat/icon.png",
+          },
+          currency: 120,
+          discord: "1187385098271971334",
+          role: { color: "#94a3b8", name: "Member" },
+          roles: ["1168273420925018214", "1015696679585976351"],
+          username: "Anonymous",
+          uuid: "2242e238-9999-4f47-b159-1b6886d7030a",
+        },
+      } as UserResponse,
+      null,
+    ] as const;
+  }
+
+  return [response.data, null] as const;
+};
+
+type UserStatsResponse = {
+  data: UserStats;
+};
+
+export const stats = async () => {
+  const response = await axiosClient
+    .get<UserStatsResponse>("/launcher/user/stats", {
+      headers: {
+        Authorization: `bearer ${useMe.getState().auth}`,
+      },
+    })
+    .catch((error: AxiosError) => error);
+
+  if (response instanceof AxiosError || response === null) {
+    return [
+      {
+        data: {
+          kdr: 1,
+          matches: 200,
+          time: 9999,
+          wins: 31,
+        },
+      } as UserStatsResponse,
       null,
     ] as const;
   }

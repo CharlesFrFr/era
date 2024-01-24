@@ -76,3 +76,28 @@ type ShopStorefront = {
   content: ShopEntry[];
   expires_at: string;
 };
+
+//
+
+type User = {
+  avatar: string;
+  character: {
+    icon: string;
+  };
+  currency: number;
+  discord: string;
+  role: {
+    color: string;
+    name: string;
+  };
+  roles: string[];
+  username: string;
+  uuid: string;
+};
+
+type UserStats = {
+  kdr: number;
+  matches: number;
+  time: number;
+  wins: number;
+};

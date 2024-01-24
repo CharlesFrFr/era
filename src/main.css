@@ -139,3 +139,16 @@ section.app .page .children {
 a[href] {
   text-decoration: none;
 }
+
+input {
+  font-family: var(--font-code);
+  font-weight: 400;
+  font-size: 1rem;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 0.4rem;
+  background-color: var(--c2);
+  color: var(--t1);
+  transition: background-color 50ms;
+  outline: none;
+}
