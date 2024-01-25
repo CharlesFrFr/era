@@ -1,18 +1,28 @@
 # ![Era](https://github.com/ectrc/era/assets/13946988/11c733fc-a308-4b78-bf62-c2a2c79e1226)
 
-> An attempt at a recreation of the Era launcher, with some improvements.
+An attempt at a recreation of the Era launcher, with some improvements.
+
+> I have lost motivation for this project so updates will be slow, if any. If you would like to contribute, please do so.
 
 ## Features
 
-- **Freemium** Customise to your liking, with the ability to change the themes without having to purchase premium. _(this cannot provide any other premium benefits)_
 - **Interface Improvements** All promotional content has been removed, new spicy fonts and icons, user experience has been improved and resizing the window is enabled with the content will scale accordingly.
 - **Blazingly Fast** Scrap Electron, meet [Tauri](https://tauri.app), a blazingly fast alternative to Electron. This launcher is built with Rust, and is much faster than the official launcher.
+- **Fully Functional** This launcher is fully functional, and can be used to interact with the Era API services.
 
 ## Screenshots
 
 | Home                                                                                        |
 | ------------------------------------------------------------------------------------------- |
-| ![image](https://github.com/ectrc/era/assets/13946988/1be5b92e-f487-40dd-a663-10787df545f5) |
+| ![image](https://github.com/ectrc/era/assets/13946988/50b17706-753c-452e-97f5-8cb0ef6f5e43) |
+
+## How do I use this?
+
+- Install Rust [here](https://rustup.rs).
+- Install NodeJS [here](https://nodejs.org/en/download).
+- Clone the repository `git clone https://github.com/ectrc/era.git`
+- Install the dependencies `yarn install` (or `npm install`).
+- Launch in JIT mode `yarn tauri dev` (or `yarn tauri dev`).
 
 ## Disclaimer
 
