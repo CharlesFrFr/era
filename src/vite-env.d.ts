@@ -152,10 +152,49 @@ type SocketPingDownEvent = [
   payload: { response: {}; status: "ok" }
 ];
 
+type SocketServerAddDownEvent = [
+  id: null,
+  ref: null,
+  channel: "status:server",
+  type: "server_add",
+  payload: Server
+];
+
+type SocketServerUpdateDownEvent = [
+  id: null,
+  ref: null,
+  channel: "status:server",
+  type: "update",
+  payload: Server
+];
+
+type SocketServerRemoveDownEvent = [
+  id: null,
+  ref: null,
+  channel: "status:servers",
+  type: "server_remove",
+  payload: Server
+];
+
 type SocketDownEventData = SocketPingDownEvent;
-type SocketDownEventType = "ping" | "join";
+type SocketDownEventType =
+  | "ping"
+  | "join"
+  | "server:add"
+  | "server:update"
+  | "server:remove";
 type GetEventDataFromSocketDownEventType<T extends SocketDownEventType> =
-  T extends "ping" ? SocketPingDownEvent : never;
+  T extends "ping"
+    ? SocketPingDownEvent
+    : T extends "server:add"
+    ? SocketServerAddDownEvent
+    : T extends "server:update"
+    ? SocketServerUpdateDownEvent
+    : T extends "server:remove"
+    ? SocketServerRemoveDownEvent
+    : never;
+
+type x = GetEventDataFromSocketDownEventType<"server:add">;
 
 type SocketPongUpEvent = {
   id: null;
@@ -165,4 +204,12 @@ type SocketPongUpEvent = {
   payload: {};
 };
 
-type SocketUpEventData = SocketPongUpEvent;
+type SocketJoinChannelUpEvent = {
+  id?: string;
+  ref?: string;
+  channel: string;
+  type: "phx_join";
+  payload: {};
+};
+
+type SocketUpEventData = SocketPongUpEvent | SocketJoinChannelUpEvent;

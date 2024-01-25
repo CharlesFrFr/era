@@ -25,7 +25,8 @@ type SocketState = {
       listeners: Map<SocketDownEventType, BindableSocketDownEventType[]>;
     }
   >;
-  connect: () => void;
+  connectMain: () => void;
+  connectServer: () => void;
   bind: <T extends SocketDownEventType>(
     socketId: string,
     type: T,
@@ -48,7 +49,6 @@ const socketHandler = (
       }
     | {
         id: "server";
-        auth: string;
       }
 ): WebSocket => {
   const socket = new WebSocket(
@@ -81,18 +81,21 @@ const socketHandler = (
       type: "heartbeat",
       payload: {},
     });
+
+    switch (data.id) {
+      case "server":
+        state.emit(data.id, {
+          channel: "status:servers",
+          type: "phx_join",
+          payload: {},
+        });
+    }
   });
 
   socket.addEventListener("message", (event) => {
-    const socketMessage = JSON.parse(event.data) as [
-      id: string,
-      ref: string,
-      channel: string,
-      type: string,
-      payload: any
-    ];
+    const socketMessage = eventDataTupleToObj(JSON.parse(event.data));
 
-    switch (socketMessage[2].split(":")[0]) {
+    switch (socketMessage.channel) {
       case "phoenix":
         const me = state.sockets.get(data.id);
         if (!me) return;
@@ -100,7 +103,31 @@ const socketHandler = (
         const listeners = me.listeners.get("ping");
         if (!listeners) return;
 
-        listeners.forEach((listener) => listener(JSON.parse(event.data)));
+        listeners.forEach((listener) =>
+          listener(eventDataTupleToObj(JSON.parse(event.data)))
+        );
+        break;
+      case "status:servers":
+        const server = state.sockets.get(data.id);
+        if (!server) return;
+
+        const listenerEventName =
+          socketMessage.type === "update"
+            ? "server:update"
+            : socketMessage.type === "server_add"
+            ? "server:add"
+            : socketMessage.type === "server_remove"
+            ? "server:remove"
+            : null;
+        if (!listenerEventName) return;
+
+        const serverListeners = server.listeners.get(listenerEventName);
+        if (!serverListeners) return;
+
+        serverListeners.forEach((listener) =>
+          listener(eventDataTupleToObj(JSON.parse(event.data)))
+        );
+
         break;
     }
   });
@@ -117,7 +144,7 @@ const socketHandler = (
 export const useSocket = create<SocketState>((set, get) => ({
   listeners: new Map(),
   sockets: new Map(),
-  connect: () => {
+  connectMain: () => {
     const state = get();
     if (state.sockets.get("main")) return;
 
@@ -130,6 +157,23 @@ export const useSocket = create<SocketState>((set, get) => ({
     set((state) => {
       const sockets = state.sockets;
       sockets.set("main", {
+        socket,
+        listeners: new Map(),
+      });
+      return { sockets };
+    });
+  },
+  connectServer: () => {
+    const state = get();
+    if (state.sockets.get("server")) return;
+
+    const socket = socketHandler(state, {
+      id: "server",
+    });
+
+    set((state) => {
+      const sockets = state.sockets;
+      sockets.set("server", {
         socket,
         listeners: new Map(),
       });

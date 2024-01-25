@@ -56,7 +56,18 @@ const appRoute = new Route({
     !frontend.loaded && (await frontend.load());
     !user.loaded && (await user.load());
     !servers.loaded && (await servers.load());
-    !socket.sockets.has("main") && (await socket.connect());
+    !socket.sockets.has("main") && (await socket.connectMain());
+    !socket.sockets.has("server") && (await socket.connectServer());
+
+    socket.bind("server", "server:add", (event) =>
+      servers.add(event.payload as Server)
+    );
+    socket.bind("server", "server:update", (event) =>
+      servers.update(event.payload as Server)
+    );
+    socket.bind("server", "server:remove", (event) =>
+      servers.remove(event.payload as Server)
+    );
   },
 });
 

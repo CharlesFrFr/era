@@ -1,4 +1,5 @@
 import { useMe } from "src/state/me";
+import { useServers } from "src/state/servers";
 import moment from "moment";
 
 import { Link } from "@tanstack/react-router";
@@ -8,6 +9,13 @@ import "src/styles/stats.css";
 
 const UserStats = () => {
   const me = useMe();
+  const servers = useServers((state) => state.servers).filter(
+    (server) => server.status === "online" && !server.private
+  );
+  const players = servers.reduce(
+    (acc, server) => acc + server.number_of_players,
+    0
+  );
 
   if (!me.loaded || me.era.uuid === "") return null;
 
@@ -26,8 +34,8 @@ const UserStats = () => {
           <div className="welcome">
             <h4>Hi, {me.era.username}!</h4>
             <p>
-              There are currently <strong>0</strong> players online, with a
-              total of <strong>0</strong> players.
+              There are currently <strong>{servers.length}</strong> servers
+              online, with a total of <strong>{players}</strong> players.
             </p>
           </div>
         </div>
