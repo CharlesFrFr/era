@@ -3,7 +3,13 @@ import { useFrontend } from "src/state/frontend";
 import moment from "moment";
 
 import { FaExternalLinkAlt } from "react-icons/fa";
-import { FaEye, FaNewspaper, FaFire } from "react-icons/fa6";
+import {
+  FaEye,
+  FaNewspaper,
+  FaFire,
+  FaChevronLeft,
+  FaChevronRight,
+} from "react-icons/fa6";
 import "src/styles/blogs.css";
 
 enum ScrollPosition {
@@ -75,6 +81,32 @@ const Blogs = () => {
           </div>
         ))}
       </div>
+
+      {scrollPosition !== ScrollPosition.Left && (
+        <div
+          className="scrollIndicator left"
+          onClick={() => {
+            if (!container.current) return;
+
+            container.current.scrollLeft -= 350;
+          }}
+        >
+          <FaChevronLeft />
+        </div>
+      )}
+
+      {scrollPosition !== ScrollPosition.Right && (
+        <div
+          className="scrollIndicator right"
+          onClick={() => {
+            if (!container.current) return;
+
+            container.current.scrollLeft += 350;
+          }}
+        >
+          <FaChevronRight />
+        </div>
+      )}
     </div>
   );
 };
