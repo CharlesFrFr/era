@@ -17,11 +17,15 @@ import Library from "src/pages/library";
 import Servers from "src/pages/servers";
 import Shop from "src/pages/shop";
 import Developer from "src/pages/developer";
+import { useFrontend } from "src/state/frontend";
+import { useMe } from "src/state/me";
+import { useSocket } from "src/state/socket";
 const rootRoute = new RootRoute({
   component: function RootRoute() {
     return (
       <TauriFrame>
         <Outlet />
+        Hello World
       </TauriFrame>
     );
   },
@@ -41,6 +45,15 @@ const appRoute = new Route({
       </div>
     </section>
   ),
+  beforeLoad: async () => {
+    const frontend = useFrontend.getState();
+    const user = useMe.getState();
+    const socket = useSocket.getState();
+
+    !frontend.loaded && (await frontend.load());
+    !user.loaded && (await user.load());
+    !socket.socket && (await socket.connect());
+  },
 });
 
 const downloadsRoute = new Route({

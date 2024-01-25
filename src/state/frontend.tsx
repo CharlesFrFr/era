@@ -14,9 +14,11 @@ type FrontendState = {
   };
   blogs: Blog[];
   load: () => void;
+  loaded: boolean;
 };
 
 export const useFrontend = create<FrontendState>((set) => ({
+  loaded: false,
   banners: [],
   shop: {
     daily: {
@@ -39,6 +41,11 @@ export const useFrontend = create<FrontendState>((set) => ({
 
     const [shop] = await era.shop();
     const [blogs] = await era.blogs();
-    set({ banners: newBanners, shop: shop.data, blogs: blogs.data });
+    set({
+      banners: newBanners,
+      shop: shop.data,
+      blogs: blogs.data,
+      loaded: true,
+    });
   },
 }));

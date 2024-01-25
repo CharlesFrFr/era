@@ -8,6 +8,7 @@ type MeState = {
   era: User;
   stats: UserStats;
   load: () => void;
+  loaded: boolean;
 };
 
 export const useMe = create<MeState>()(
@@ -37,8 +38,9 @@ export const useMe = create<MeState>()(
         const [me] = await era.user();
         const [stats] = await era.stats();
 
-        set({ era: me.data, stats: stats.data });
+        set({ era: me.data, stats: stats.data, loaded: true });
       },
+      loaded: false,
     }),
     {
       name: "me",

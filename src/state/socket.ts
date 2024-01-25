@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import { useMe } from "src/state/me";
-import { emit } from "@tauri-apps/api/event";
 
 const eventDataTupleToObj = <T extends SocketDownEventType>(
   tuple: GetEventDataFromSocketDownEventType<T>
@@ -22,6 +21,10 @@ type SocketState = {
     ((event: ReturnType<typeof eventDataTupleToObj>) => void)[]
   >;
   bind: <T extends SocketDownEventType>(
+    type: T,
+    listener: (event: ReturnType<typeof eventDataTupleToObj>) => void
+  ) => void;
+  unbind: <T extends SocketDownEventType>(
     type: T,
     listener: (event: ReturnType<typeof eventDataTupleToObj>) => void
   ) => void;
@@ -97,6 +100,15 @@ export const useSocket = create<SocketState>((set, get) => ({
     const { listeners } = get();
     const currentListeners = listeners.get(type) || [];
     listeners.set(type, [...currentListeners, listener]);
+    set({ listeners });
+  },
+  unbind: (type, listener) => {
+    const { listeners } = get();
+    const currentListeners = listeners.get(type) || [];
+    listeners.set(
+      type,
+      currentListeners.filter((l) => l !== listener)
+    );
     set({ listeners });
   },
   emit: (event) => {

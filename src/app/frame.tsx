@@ -1,8 +1,4 @@
 import { appWindow } from "@tauri-apps/api/window";
-import { useEffect } from "react";
-import { useFrontend } from "src/state/frontend";
-import { useMe } from "src/state/me";
-import { useSocket } from "src/state/socket";
 
 import { HiMinus, HiX } from "react-icons/hi";
 import "src/styles/frame.css";
@@ -12,15 +8,6 @@ type FrameProps = {
 };
 
 const TauriFrame = (props: FrameProps) => {
-  const loadFrontend = useFrontend((state) => state.load);
-  const loadUser = useMe((state) => state.load);
-  const loadSocket = useSocket((state) => state.connect);
-  useEffect(() => {
-    loadUser();
-    loadFrontend();
-    loadSocket();
-  }, []);
-
   return (
     <main className="frame">
       <nav data-tauri-drag-region>
