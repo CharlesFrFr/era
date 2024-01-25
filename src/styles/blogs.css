@@ -137,12 +137,13 @@
   width: 100%;
   height: 100%;
   opacity: 0;
-  background-color: #00000060;
-  transition: opacity 70ms, backdrop-filter 70ms;
+  background-color: #00000020;
+  transition: background-color 70ms;
+  opacity: 1;
 }
 
 .blogs-container .blog:hover .hover-content {
-  opacity: 1;
+  background-color: #00000050;
 }
 
 .blogs-container .blog .hover-content h1 {
@@ -151,6 +152,12 @@
   font-family: var(--font-header);
   text-transform: capitalize;
   color: var(--t0);
+  text-shadow: 0 0 0.5rem #00000086;
+}
+
+.hover-content .small {
+  text-shadow: 0 0 0.25rem #00000086;
+  font-size: 0.8rem;
 }
 
 .blogs-container .blog .hover-content .tags {

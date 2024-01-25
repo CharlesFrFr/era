@@ -120,3 +120,49 @@ type Blog = {
   tags: string[];
   views: number;
 };
+
+//
+
+type Server = {
+  accepting_players: boolean;
+  build: {
+    name: string;
+    build: string;
+  };
+  max_players: number;
+  name: string;
+  number_of_players: number;
+  playlist: {
+    image: string;
+    name: string;
+  };
+  private: boolean;
+  region: string;
+  status: "online" | "offline";
+  uuid: string;
+};
+
+//
+
+type SocketPingDownEvent = [
+  id: string,
+  ref: string,
+  channel: "phoenix",
+  type: "phx_reply",
+  payload: { response: {}; status: "ok" }
+];
+
+type SocketDownEventData = SocketPingDownEvent;
+type SocketDownEventType = "ping" | "join";
+type GetEventDataFromSocketDownEventType<T extends SocketDownEventType> =
+  T extends "ping" ? SocketPingDownEvent : never;
+
+type SocketPongUpEvent = {
+  id: null;
+  ref: string;
+  channel: "phoenix";
+  type: "heartbeat";
+  payload: {};
+};
+
+type SocketUpEventData = SocketPongUpEvent;

@@ -3,24 +3,37 @@ import { useShallow } from "zustand/react/shallow";
 
 import { HiX } from "react-icons/hi";
 import "src/styles/banner.css";
+import { useSocket } from "src/state/socket";
 
 const Advert = () => {
   const [visible, setVisible] = useGlobal(
     useShallow((state) => [state.advert, state.closeAdvert])
   );
-  if (!visible) return null;
+  const socket = useSocket((state) => state.socket);
 
   return (
-    <div className="banner">
-      <p>
-        <b>Note!</b> You can download the publicly available version{" "}
-        <code>7.40-CL-5046157</code>
-      </p>
-      <s></s>
-      <button className="close" onClick={() => setVisible(false)}>
-        <HiX />
-      </button>
-    </div>
+    <>
+      {visible && (
+        <div className="banner">
+          <p>
+            <b>Note!</b> You can download the publicly available version{" "}
+            <code>7.40-CL-5046157</code>
+          </p>
+          <s></s>
+          <button className="close" onClick={() => setVisible(false)}>
+            <HiX />
+          </button>
+        </div>
+      )}
+      {!socket && (
+        <div className="banner socket">
+          <p>
+            <b>Socket Disconnected!</b> You will not receive any live updates
+            until you reconnect.
+          </p>
+        </div>
+      )}
+    </>
   );
 };
 

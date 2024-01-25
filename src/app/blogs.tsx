@@ -73,7 +73,9 @@ const Blogs = () => {
                 ))}
               </div>
               <h1>{blog.header.toLowerCase()}</h1>
-              <small>By {blog.author.replace(/\[[^\]]+\]/g, "").trim()}</small>
+              <span className="small">
+                By {blog.author.replace(/\[[^\]]+\]/g, "").trim()}
+              </span>
               <div className="external-link">
                 <FaExternalLinkAlt />
               </div>
@@ -82,29 +84,21 @@ const Blogs = () => {
         ))}
       </div>
 
-      {scrollPosition !== ScrollPosition.Left && (
-        <div
-          className="scrollIndicator left"
-          onClick={() => {
-            if (!container.current) return;
-
-            container.current.scrollLeft -= 350;
-          }}
-        >
-          <FaChevronLeft />
-        </div>
-      )}
-
       {scrollPosition !== ScrollPosition.Right && (
         <div
           className="scrollIndicator right"
-          onClick={() => {
-            if (!container.current) return;
-
-            container.current.scrollLeft += 350;
-          }}
+          onClick={() => (container.current!.scrollLeft += 350)}
         >
           <FaChevronRight />
+        </div>
+      )}
+
+      {scrollPosition !== ScrollPosition.Left && (
+        <div
+          className="scrollIndicator left"
+          onClick={() => (container.current!.scrollLeft -= 350)}
+        >
+          <FaChevronLeft />
         </div>
       )}
     </div>

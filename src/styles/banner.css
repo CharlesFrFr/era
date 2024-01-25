@@ -16,6 +16,14 @@
   );
 }
 
+.banner.socket {
+  background-image: radial-gradient(
+    circle at 50% -50%,
+    #e63838 0%,
+    #a5680b 100%
+  );
+}
+
 .banner * {
   font-size: 0.85rem;
   font-weight: 400;
