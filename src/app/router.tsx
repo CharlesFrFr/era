@@ -9,6 +9,7 @@ import {
 import { useFrontend } from "src/state/frontend";
 import { useMe } from "src/state/me";
 import { useSocket } from "src/state/socket";
+import { useServers } from "src/state/servers";
 
 import TauriFrame from "src/app/frame";
 import Drawer from "src/app/drawer";
@@ -49,11 +50,13 @@ const appRoute = new Route({
   beforeLoad: async () => {
     const frontend = useFrontend.getState();
     const user = useMe.getState();
+    const servers = useServers.getState();
     const socket = useSocket.getState();
 
     !frontend.loaded && (await frontend.load());
     !user.loaded && (await user.load());
-    !socket.socket && (await socket.connect());
+    !servers.loaded && (await servers.load());
+    !socket.sockets.has("main") && (await socket.connect());
   },
 });
 

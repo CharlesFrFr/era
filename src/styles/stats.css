@@ -3,6 +3,7 @@
   flex-direction: column;
   gap: 0.5rem;
   margin-top: 4rem;
+  margin-bottom: 1rem;
   transition: margin-top 100ms;
   min-height: max-content;
 }

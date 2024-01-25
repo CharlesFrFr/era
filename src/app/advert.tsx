@@ -9,7 +9,8 @@ const Advert = () => {
   const [visible, setVisible] = useGlobal(
     useShallow((state) => [state.advert, state.closeAdvert])
   );
-  const socket = useSocket((state) => state.socket);
+
+  const sockets = useSocket((state) => state.sockets);
 
   return (
     <>
@@ -25,7 +26,7 @@ const Advert = () => {
           </button>
         </div>
       )}
-      {!socket && (
+      {(!sockets.has("main") || sockets.get("main") === null) && (
         <div className="banner socket">
           <p>
             <b>Socket Disconnected!</b> You will not receive any live updates

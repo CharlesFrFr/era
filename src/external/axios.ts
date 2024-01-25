@@ -155,3 +155,29 @@ export const blogs = async () => {
 
   return [response.data, null] as const;
 };
+
+type ServersResponse = {
+  data: Server[];
+};
+
+export const servers = async () => {
+  const response = await axiosClient
+    .get<ServersResponse>("/external/game/servers", {
+      headers: {
+        "x-era-client-token":
+          "HVO4Dkf54RvWhWAWyCthiRQW0w5E1IJ4hXzlyzVgtvjXmYLEVXOO6GSsWL8ldSpa",
+      },
+    })
+    .catch((error: AxiosError) => error);
+
+  if (response instanceof AxiosError || response === null) {
+    return [
+      {
+        data: [],
+      } as ServersResponse,
+      null,
+    ] as const;
+  }
+
+  return [response.data, null] as const;
+};

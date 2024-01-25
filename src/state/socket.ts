@@ -13,108 +13,160 @@ const eventDataObjToTuple = <T extends SocketUpEventData>(obj: T) => {
   return [id, ref, channel, type, payload] as const;
 };
 
+type BindableSocketDownEventType = (
+  event: ReturnType<typeof eventDataTupleToObj>
+) => void;
+
 type SocketState = {
-  socket: WebSocket | null;
-  connect: () => void;
-  listeners: Map<
-    SocketDownEventType,
-    ((event: ReturnType<typeof eventDataTupleToObj>) => void)[]
+  sockets: Map<
+    string,
+    {
+      socket: WebSocket | null;
+      listeners: Map<SocketDownEventType, BindableSocketDownEventType[]>;
+    }
   >;
+  connect: () => void;
   bind: <T extends SocketDownEventType>(
+    socketId: string,
     type: T,
-    listener: (event: ReturnType<typeof eventDataTupleToObj>) => void
+    listener: BindableSocketDownEventType
   ) => void;
   unbind: <T extends SocketDownEventType>(
+    socketId: string,
     type: T,
-    listener: (event: ReturnType<typeof eventDataTupleToObj>) => void
+    listener: BindableSocketDownEventType
   ) => void;
-  emit: <T extends SocketUpEventData>(event: T) => void;
+  emit: <T extends SocketUpEventData>(socketId: string, event: T) => void;
+};
+
+const socketHandler = (
+  state: SocketState,
+  data:
+    | {
+        id: "main";
+        url: string;
+      }
+    | {
+        id: "server";
+        auth: string;
+      }
+): WebSocket => {
+  const socket = new WebSocket(
+    data.id === "main"
+      ? data.url
+      : "wss://ws.erafn.org/external/websocket?token=HVO4Dkf54RvWhWAWyCthiRQW0w5E1IJ4hXzlyzVgtvjXmYLEVXOO6GSsWL8ldSpa&vsn=2.0.0"
+  );
+
+  const pinger = setInterval(() => {
+    state.emit(data.id, {
+      id: null,
+      ref: "1",
+      channel: "phoenix",
+      type: "heartbeat",
+      payload: {},
+    });
+  }, 30000);
+
+  socket.addEventListener("open", () => {
+    console.log(`[socket:${data.id}] connected!`);
+
+    state.bind(data.id, "ping", (event) => {
+      console.log(`[socket:${data.id}] ping event`, event);
+    });
+
+    state.emit(data.id, {
+      id: null,
+      ref: "1",
+      channel: "phoenix",
+      type: "heartbeat",
+      payload: {},
+    });
+  });
+
+  socket.addEventListener("message", (event) => {
+    const socketMessage = JSON.parse(event.data) as [
+      id: string,
+      ref: string,
+      channel: string,
+      type: string,
+      payload: any
+    ];
+
+    switch (socketMessage[2].split(":")[0]) {
+      case "phoenix":
+        const me = state.sockets.get(data.id);
+        if (!me) return;
+
+        const listeners = me.listeners.get("ping");
+        if (!listeners) return;
+
+        listeners.forEach((listener) => listener(JSON.parse(event.data)));
+        break;
+    }
+  });
+
+  socket.addEventListener("close", () => {
+    console.log(`[socket:${data.id}] disconnected!`);
+    state.sockets.delete(data.id);
+    clearInterval(pinger);
+  });
+
+  return socket;
 };
 
 export const useSocket = create<SocketState>((set, get) => ({
   listeners: new Map(),
-  socket: null,
+  sockets: new Map(),
   connect: () => {
     const state = get();
-    if (state.socket) return;
+    if (state.sockets.get("main")) return;
 
     const token = useToken.getState().token;
-    const socket = new WebSocket(
-      `wss://ws.erafn.org/launcher/websocket?token=${token}&vsn=2.0.0`
-    );
-
-    const pinger = setInterval(() => {
-      get().emit({
-        id: null,
-        ref: "1",
-        channel: "phoenix",
-        type: "heartbeat",
-        payload: {},
-      });
-    }, 30000);
-
-    socket.addEventListener("open", () => {
-      get().bind("ping", (event) => {
-        console.log("ping", event);
-      });
-
-      get().emit({
-        id: null,
-        ref: "1",
-        channel: "phoenix",
-        type: "heartbeat",
-        payload: {},
-      });
+    const socket = socketHandler(state, {
+      id: "main",
+      url: `wss://ws.erafn.org/launcher/websocket?token=${token}&vsn=2.0.0`,
     });
 
-    socket.addEventListener("message", (event) => {
-      console.log("message", event.data);
-      const { listeners } = get();
-      const data = JSON.parse(event.data) as [
-        id: string,
-        ref: string,
-        channel: string,
-        type: string,
-        payload: any
-      ];
-
-      switch (data[2].split(":")[0]) {
-        case "phoenix":
-          const currentListeners = listeners.get("ping") || [];
-          currentListeners.forEach((listener) =>
-            listener(JSON.parse(event.data))
-          );
-          break;
-      }
+    set((state) => {
+      const sockets = state.sockets;
+      sockets.set("main", {
+        socket,
+        listeners: new Map(),
+      });
+      return { sockets };
     });
-
-    socket.addEventListener("close", () => {
-      console.log("[socket] disconnected!");
-      set({ socket: null });
-      clearInterval(pinger);
-    });
-
-    set({ socket });
   },
-  bind: (type, listener) => {
-    const { listeners } = get();
-    const currentListeners = listeners.get(type) || [];
-    listeners.set(type, [...currentListeners, listener]);
-    set({ listeners });
+  bind: (id, type, listener) => {
+    const { sockets } = get();
+
+    const entry = sockets.get(id);
+    if (!entry) return;
+
+    const currentListeners = entry.listeners.get(type) || [];
+    entry.listeners.set(type, [...currentListeners, listener]);
+
+    set({ sockets });
   },
-  unbind: (type, listener) => {
-    const { listeners } = get();
-    const currentListeners = listeners.get(type) || [];
-    listeners.set(
+  unbind: (id, type, listener) => {
+    const { sockets } = get();
+
+    const entry = sockets.get(id);
+    if (!entry) return;
+
+    const currentListeners = entry.listeners.get(type) || [];
+    entry.listeners.set(
       type,
       currentListeners.filter((l) => l !== listener)
     );
-    set({ listeners });
-  },
-  emit: (event) => {
-    const { socket } = get();
-    if (!socket) return;
 
-    socket.send(JSON.stringify(eventDataObjToTuple(event)));
+    set({ sockets });
+  },
+  emit: (id, event) => {
+    const { sockets } = get();
+
+    const entry = sockets.get(id);
+    if (!entry) return;
+
+    entry.socket?.send(JSON.stringify(eventDataObjToTuple(event)));
   },
 }));

@@ -8,6 +8,7 @@ aside.drawer {
 }
 
 aside.drawer a.item {
+  position: relative;
   all: unset;
   display: flex;
   flex-direction: row;
@@ -54,4 +55,30 @@ aside.drawer a.item.now .icon svg {
 aside.drawer a.item span.text {
   font-size: 1rem;
   font-weight: 500;
+}
+
+aside.drawer a.item span.info {
+  margin-left: auto;
+  padding: 0.1rem 0.3rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--t0);
+  border-radius: 99rem;
+  background-color: var(--c0);
+}
+
+aside.drawer a.item span.info.fire {
+  background-image: radial-gradient(
+    circle at 50% -50%,
+    #e63838 0%,
+    #a5680b 100%
+  );
+}
+
+aside.drawer a.item span.info.servers {
+  background-image: radial-gradient(
+    circle at 50% -50%,
+    #1e8fa3 0%,
+    #107e50 100%
+  );
 }
