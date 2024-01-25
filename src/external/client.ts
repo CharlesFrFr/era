@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { shop, banners, user, stats } from "./axios";
+import { shop, banners, user, stats, blogs } from "./axios";
 
 export const axiosClient = axios.create({
   baseURL: "https://api.v1.external.erafn.org/api/",
@@ -14,6 +14,7 @@ const era = {
   shop,
   user,
   stats,
+  blogs,
 };
 
 export default era;

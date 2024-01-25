@@ -2,6 +2,7 @@ section.featured {
   display: flex;
   flex-direction: row;
   gap: 1rem;
+  min-height: max-content;
 }
 
 section.featured .left {
@@ -17,6 +18,7 @@ section.featured .right {
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-height: 18.5rem;
 }
 
 .shop-animate-event {

@@ -101,3 +101,22 @@ type UserStats = {
   time: number;
   wins: number;
 };
+
+//
+
+type Blog = {
+  id: number;
+  accent: string;
+  author: string;
+  body: string;
+  header: string;
+  image: string;
+  inserted_at: string;
+  meta: {
+    blurhash?: string;
+    height?: number;
+    special?: boolean;
+  };
+  tags: string[];
+  views: number;
+};

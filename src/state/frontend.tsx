@@ -12,6 +12,7 @@ type FrontendState = {
     featured: ShopStorefront;
     unique: string;
   };
+  blogs: Blog[];
   load: () => void;
 };
 
@@ -28,6 +29,7 @@ export const useFrontend = create<FrontendState>((set) => ({
     },
     unique: "",
   },
+  blogs: [],
   load: async () => {
     const [oldBanners] = await era.banners();
     const newBanners = oldBanners.data.map((banner) => ({
@@ -36,6 +38,7 @@ export const useFrontend = create<FrontendState>((set) => ({
     }));
 
     const [shop] = await era.shop();
-    set({ banners: newBanners, shop: shop.data });
+    const [blogs] = await era.blogs();
+    set({ banners: newBanners, shop: shop.data, blogs: blogs.data });
   },
 }));
