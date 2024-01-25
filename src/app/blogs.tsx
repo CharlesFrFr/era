@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { useFrontend } from "src/state/frontend";
+import { motion } from "framer-motion";
 import moment from "moment";
 
 import { FaExternalLinkAlt } from "react-icons/fa";
@@ -36,6 +37,8 @@ const Blogs = () => {
     }
   };
 
+  if (blogs.length < 1 || !blogs) return null;
+
   return (
     <div className={`blogs-wrapper ${scrollPosition}`}>
       <header>
@@ -44,13 +47,26 @@ const Blogs = () => {
         </div>
         <h2>News and Updates</h2>
       </header>
-      <div
+      <motion.div
         className="blogs-container"
         ref={container}
         onScroll={handleOnScroll}
+        animate="visible"
+        initial="hidden"
+        variants={{
+          hidden: { opacity: 0 },
+          visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
+        }}
       >
         {blogs.map((blog) => (
-          <div className="blog" key={blog.id}>
+          <motion.div
+            className="blog"
+            key={blog.id}
+            variants={{
+              hidden: { opacity: 0, y: 20 },
+              visible: { opacity: 1, y: 0 },
+            }}
+          >
             <div className="overlay">
               <img src={blog.image} alt="" />
             </div>
@@ -80,9 +96,9 @@ const Blogs = () => {
                 <FaExternalLinkAlt />
               </div>
             </div>
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
 
       {scrollPosition !== ScrollPosition.Right && (
         <div

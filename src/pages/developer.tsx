@@ -1,12 +1,8 @@
 import { useFrontend } from "src/state/frontend";
-import { useMe } from "src/state/me";
-import { useShallow } from "zustand/react/shallow";
+import { useToken } from "src/state/me";
 
 const Developer = () => {
-  const [token, setToken] = useMe(
-    useShallow((state) => [state.auth, state.setAuthInput])
-  );
-
+  const { token, setToken } = useToken();
   const load = useFrontend((state) => state.load);
 
   return (

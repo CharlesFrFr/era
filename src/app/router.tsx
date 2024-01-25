@@ -6,6 +6,9 @@ import {
   Navigate,
   Outlet,
 } from "@tanstack/react-router";
+import { useFrontend } from "src/state/frontend";
+import { useMe } from "src/state/me";
+import { useSocket } from "src/state/socket";
 
 import TauriFrame from "src/app/frame";
 import Drawer from "src/app/drawer";
@@ -17,9 +20,7 @@ import Library from "src/pages/library";
 import Servers from "src/pages/servers";
 import Shop from "src/pages/shop";
 import Developer from "src/pages/developer";
-import { useFrontend } from "src/state/frontend";
-import { useMe } from "src/state/me";
-import { useSocket } from "src/state/socket";
+
 const rootRoute = new RootRoute({
   component: function RootRoute() {
     return (

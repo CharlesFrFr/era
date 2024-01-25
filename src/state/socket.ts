@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { useMe } from "src/state/me";
+import { useToken } from "src/state/me";
 
 const eventDataTupleToObj = <T extends SocketDownEventType>(
   tuple: GetEventDataFromSocketDownEventType<T>
@@ -38,7 +38,7 @@ export const useSocket = create<SocketState>((set, get) => ({
     const state = get();
     if (state.socket) return;
 
-    const token = useMe.getState().auth;
+    const token = useToken.getState().token;
     const socket = new WebSocket(
       `wss://ws.erafn.org/launcher/websocket?token=${token}&vsn=2.0.0`
     );

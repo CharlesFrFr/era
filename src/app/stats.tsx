@@ -9,6 +9,8 @@ import "src/styles/stats.css";
 const UserStats = () => {
   const me = useMe();
 
+  if (!me.loaded || me.era.uuid === "") return null;
+
   return (
     <div className="stats">
       <div className="row">
