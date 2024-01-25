@@ -5,10 +5,10 @@ import * as Icons from "react-icons/fa6";
 import "src/styles/drawer.css";
 
 const Drawer = () => {
-  const servers = useServers((state) => state.servers).filter(
-    (server) => server.status === "online"
+  const servers = useServers((state) => state.servers);
+  const filtered = Object.values(servers).filter(
+    (server) => server.status === "online" && !server.private
   );
-
   return (
     <aside className="drawer">
       <DrawerItem label="Home" icon="FaHouse" path="/app/home" />
@@ -28,7 +28,7 @@ const Drawer = () => {
         path="/app/servers"
         info={{
           style: "servers",
-          message: servers.length.toString(),
+          message: filtered.length.toString(),
         }}
       />
       <DrawerItem label="Downloads" icon="FaDownload" path="/app/downloads" />

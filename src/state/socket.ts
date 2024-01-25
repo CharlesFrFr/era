@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { useToken } from "src/state/me";
+import { useServers } from "./servers";
 
 const eventDataTupleToObj = <T extends SocketDownEventType>(
   tuple: GetEventDataFromSocketDownEventType<T>
@@ -179,6 +180,16 @@ export const useSocket = create<SocketState>((set, get) => ({
       });
       return { sockets };
     });
+
+    get().bind("server", "server:add", (event) =>
+      useServers.getState().add(event.payload as Server)
+    );
+    get().bind("server", "server:update", (event) =>
+      useServers.getState().update(event.payload as Server)
+    );
+    get().bind("server", "server:remove", (event) =>
+      useServers.getState().remove(event.payload as Server)
+    );
   },
   bind: (id, type, listener) => {
     const { sockets } = get();

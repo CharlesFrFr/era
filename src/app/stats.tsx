@@ -9,10 +9,11 @@ import "src/styles/stats.css";
 
 const UserStats = () => {
   const me = useMe();
-  const servers = useServers((state) => state.servers).filter(
+  const servers = useServers((state) => state.servers);
+  const nonMap = Object.values(Object.fromEntries(servers)).filter(
     (server) => server.status === "online" && !server.private
   );
-  const players = servers.reduce(
+  const players = nonMap.reduce(
     (acc, server) => acc + server.number_of_players,
     0
   );
@@ -34,7 +35,7 @@ const UserStats = () => {
           <div className="welcome">
             <h4>Hi, {me.era.username}!</h4>
             <p>
-              There are currently <strong>{servers.length}</strong> servers
+              There are currently <strong>{nonMap.length}</strong> servers
               online, with a total of <strong>{players}</strong> players.
             </p>
           </div>
