@@ -12,7 +12,7 @@ const Drawer = () => {
   return (
     <aside className="drawer">
       <DrawerItem label="Home" icon="FaHouse" path="/app/home" />
-      {/* <DrawerItem label="Library" icon="FaFolder" path="/app/library" />
+      {/* <DrawerItem label="Library" icon="FaFolder" path="/app/library" />*/}
       <DrawerItem
         label="Shop"
         icon="FaCartShopping"
@@ -22,7 +22,7 @@ const Drawer = () => {
         //   message: "NEW",
         // }}
       />
-      <DrawerItem label="Downloads" icon="FaDownload" path="/app/downloads" /> */}
+      {/*<DrawerItem label="Downloads" icon="FaDownload" path="/app/downloads" /> */}
       <DrawerItem
         label="Servers"
         icon="FaServer"

@@ -27,7 +27,6 @@ const rootRoute = new RootRoute({
     return (
       <TauriFrame>
         <Outlet />
-        Hello World
       </TauriFrame>
     );
   },
