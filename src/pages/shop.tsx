@@ -1,12 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useFrontend } from "src/state/frontend";
 import { useMe } from "src/state/me";
+import moment from "moment";
 
 import "src/styles/shop.css";
 
 const Shop = () => {
   const store = useFrontend((state) => state.shop);
   const vbucks = useMe((state) => state.era.currency);
+  const [dateNow, setDateNow] = useState(Date.now());
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setDateNow(Date.now());
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const featuredDays = moment(store.featured.expires_at).diff(dateNow, "days");
 
   return (
     <div className="store-container">
@@ -26,7 +38,12 @@ const Shop = () => {
           <header>
             <h3>FEATURED</h3>
             <s />
-            <time>1 Day, 13 Hours</time>
+            <time>
+              {featuredDays > 0
+                ? `${featuredDays} Days`
+                : moment(store.featured.expires_at).diff(dateNow, "hours") +
+                  " Hours"}
+            </time>
           </header>
           <div className="items">
             {store.featured.content.map((item) => (
@@ -39,7 +56,11 @@ const Shop = () => {
           <header>
             <h3>FEATURED</h3>
             <s />
-            <time>1 Day, 13 Hours</time>
+            <time>
+              {moment(store.featured.expires_at)
+                .add(-1 * dateNow)
+                .format("hh:mm:ss")}
+            </time>
           </header>
           <div className="items">
             {store.daily.content[0].map((item) => (
