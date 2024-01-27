@@ -1,14 +1,19 @@
+import { useState } from "react";
 import { useServers } from "src/state/servers";
+import { useMe } from "src/state/me";
 
 import { Link } from "@tanstack/react-router";
 import * as Icons from "react-icons/fa6";
 import "src/styles/drawer.css";
 
 const Drawer = () => {
+  const [show, set] = useState(false);
   const servers = useServers((state) => state.servers);
+  const me = useMe((state) => state.era);
   const filtered = Object.values(Object.fromEntries(servers)).filter(
     (server) => server.status === "online" && !server.private
   );
+
   return (
     <aside className="drawer">
       <DrawerItem label="Home" icon="FaHouse" path="/app/home" />
@@ -37,6 +42,35 @@ const Drawer = () => {
         icon="FaWandMagicSparkles"
         path="/app/developer"
       />
+      <s />
+      <div className="userarea">
+        {show && (
+          <div
+            className="avatar"
+            style={{
+              backgroundImage: `url(${me.avatar})`,
+            }}
+          />
+        )}
+        <div className="info">
+          <span className="username">{me.username}</span>
+          <span
+            className="role"
+            style={{
+              color: me.role.color,
+            }}
+          >
+            {me.role.name}
+          </span>
+        </div>
+      </div>
+      <img
+        style={{
+          display: "none",
+        }}
+        src={me.avatar}
+        onError={() => set(false)}
+      />
     </aside>
   );
 };
@@ -61,13 +95,6 @@ const DrawerItem = (props: DrawerItemProps) => {
       activeProps={{
         className: "item now",
       }}
-      style={
-        props.path === "/app/developer"
-          ? {
-              marginTop: "auto",
-            }
-          : {}
-      }
     >
       <div className="icon">
         <Icon />

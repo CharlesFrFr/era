@@ -82,3 +82,51 @@ aside.drawer a.item span.info.servers {
     #107e50 100%
   );
 }
+
+aside.drawer s {
+  margin-top: auto;
+}
+
+aside.drawer .userarea {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  cursor: pointer;
+  user-select: none;
+  border-radius: 0.35rem;
+}
+
+aside.drawer .userarea:hover {
+  background-color: #a5abfd0a;
+}
+
+aside.drawer .userarea .avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 99rem;
+  overflow: hidden;
+  background-color: #a5abfd0a;
+}
+
+aside.drawer .userarea .info {
+  display: flex;
+  flex-direction: column;
+}
+
+aside.drawer .userarea .info .username {
+  font-family: var(--font-header);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--t1);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+aside.drawer .userarea .info .role {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--t3);
+}
