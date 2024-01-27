@@ -49,7 +49,7 @@ const EventWrapper = () => {
               opacity: 0,
             }}
             className="animate-event left"
-            key={banners[selected].banner.meta.blurhash}
+            key={banners[selected].banner.meta.index}
           >
             <FeaturedBanner banner={banners[selected]} />
           </motion.div>

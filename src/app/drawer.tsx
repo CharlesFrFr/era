@@ -6,7 +6,7 @@ import "src/styles/drawer.css";
 
 const Drawer = () => {
   const servers = useServers((state) => state.servers);
-  const filtered = Object.values(servers).filter(
+  const filtered = Object.values(Object.fromEntries(servers)).filter(
     (server) => server.status === "online" && !server.private
   );
   return (
@@ -22,6 +22,7 @@ const Drawer = () => {
         //   message: "NEW",
         // }}
       />
+      <DrawerItem label="Downloads" icon="FaDownload" path="/app/downloads" /> */}
       <DrawerItem
         label="Servers"
         icon="FaServer"
@@ -31,7 +32,6 @@ const Drawer = () => {
           message: filtered.length.toString(),
         }}
       />
-      <DrawerItem label="Downloads" icon="FaDownload" path="/app/downloads" /> */}
       <DrawerItem
         label="Developer"
         icon="FaWandMagicSparkles"

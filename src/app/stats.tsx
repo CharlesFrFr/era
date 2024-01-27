@@ -55,7 +55,7 @@ const UserStats = () => {
       </div>
       <div className="row wrap">
         <EqualStat
-          value={me.stats.kdr.toString()}
+          value={me.stats.kdr.toFixed(2).toString()}
           description="Kill/Death Ratio"
           icon="FaSkull"
           color="red"
