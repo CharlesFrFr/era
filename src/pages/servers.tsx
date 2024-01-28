@@ -1,8 +1,8 @@
-import { Suspense } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { queryServers } from "src/external/wrapper";
 import { AnimatePresence, motion } from "framer-motion";
+import moment from "moment";
 
+import { queryInsights, queryServers } from "src/external/wrapper";
 import { FaUser } from "react-icons/fa6";
 import "src/styles/servers.css";
 
@@ -11,6 +11,12 @@ const Servers = () => {
     queryKey: ["server"],
     queryFn: queryServers,
   });
+
+  const { data: queue } = useSuspenseQuery({
+    queryKey: ["queue"],
+    queryFn: queryInsights,
+  });
+
   const filtered = Object.values(servers).filter(
     (server) => server.status === "online" && !server.private
   );
@@ -20,6 +26,12 @@ const Servers = () => {
 
   return (
     <AnimatePresence>
+      <span className="queue-time">
+        ESTIAMTED QUEUE WAIT TIME:
+        <time>
+          {moment.utc(1000 * queue.average_queue_time.duration).format("mm:ss")}
+        </time>
+      </span>
       <div className="servers-wrapper">
         <div className="servers-container">
           <header>Joinable</header>
