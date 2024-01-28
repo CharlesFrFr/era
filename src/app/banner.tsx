@@ -1,4 +1,8 @@
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { queryInsights } from "src/external/wrapper";
 import { motion } from "framer-motion";
+import moment from "moment";
+
 import { Blurhash } from "react-blurhash";
 import { FaCalendar, FaClock, FaUser } from "react-icons/fa6";
 import Markdown from "react-markdown";
@@ -12,6 +16,11 @@ const FeaturedBanner = (props: BannerProps) => {
   const backgroundUrlRaw = banner.meta.background.split("?")[0];
   const fileType = backgroundUrlRaw.split(".").pop();
   const mediaType = fileType === "mp4" ? "video" : "image";
+
+  const { data: queue } = useSuspenseQuery({
+    queryKey: ["queue"],
+    queryFn: queryInsights,
+  });
 
   const extra_styles = banner.background === "generic";
 
@@ -48,13 +57,15 @@ const FeaturedBanner = (props: BannerProps) => {
         {banner.meta.tags.find((t) => t === "players") && (
           <div className="tag">
             <FaUser />
-            2290
+            {queue.players}
           </div>
         )}
         {banner.meta.tags.find((t) => t === "queue") && (
           <div className="tag">
             <FaClock />
-            2290
+            {moment
+              .utc(1000 * queue.average_queue_time.duration)
+              .format("mm:ss")}
           </div>
         )}
         {banner.meta.tags.find((t) => t instanceof Array) && (

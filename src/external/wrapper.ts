@@ -59,3 +59,13 @@ export const queryServers = async (): Promise<Server[]> => {
 
   return servers.data;
 };
+
+export const queryInsights = async (): Promise<Queue> => {
+  const [queue, err] = await era.insights();
+
+  if (err) {
+    throw err;
+  }
+
+  return queue.data;
+};

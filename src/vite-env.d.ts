@@ -150,6 +150,18 @@ type Server = {
 
 //
 
+type QueueTime = {
+  duration: number;
+  preferred_region: string;
+};
+
+type Queue = {
+  average_queue_time: QueueTime;
+  players: number;
+};
+
+//
+
 type SocketPingDownEvent = [
   id: string,
   ref: string,

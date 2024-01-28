@@ -181,3 +181,34 @@ export const servers = async () => {
 
   return [response.data, null] as const;
 };
+
+type QueueResponse = {
+  data: Queue;
+};
+
+export const insights = async () => {
+  const response = await axiosClient
+    .get<QueueResponse>("/launcher/insights", {
+      headers: {
+        Authorization: `bearer ${useToken.getState().token}`,
+      },
+    })
+    .catch((error: AxiosError) => error);
+
+  if (response instanceof AxiosError || response === null) {
+    return [
+      {
+        data: {
+          average_queue_time: {
+            duration: 0,
+            preferred_region: "",
+          },
+          players: 0,
+        },
+      } as QueueResponse,
+      null,
+    ] as const;
+  }
+
+  return [response.data, null] as const;
+};
