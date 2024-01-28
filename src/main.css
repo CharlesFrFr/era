@@ -100,6 +100,7 @@ button {
   cursor: pointer;
   border: none;
   border-radius: 0.4rem;
+  color: var(--t1);
   background-color: transparent;
   transition: background-color 50ms, scale 50ms;
 }

@@ -1,7 +1,13 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { useToken } from "src/state/me";
 
 const Developer = () => {
   const { token, setToken } = useToken();
+
+  const queryClient = useQueryClient();
+  const clearCache = () => {
+    queryClient.clear();
+  };
 
   return (
     <>
@@ -18,6 +24,10 @@ const Developer = () => {
           value={token}
           onChange={(e) => setToken(e.target.value)}
         />
+
+        <button className="button" onClick={clearCache}>
+          clear cache
+        </button>
       </div>
     </>
   );

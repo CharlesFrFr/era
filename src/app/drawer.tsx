@@ -11,7 +11,7 @@ const Drawer = () => {
   const { data: servers } = useSuspenseQuery({
     queryKey: ["server"],
     queryFn: queryServers,
-    refetchInterval: 1000,
+    // refetchInterval: 1000,
   });
   const filtered = Object.values(servers).filter(
     (server) => server.status === "online" && !server.private
