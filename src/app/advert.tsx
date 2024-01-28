@@ -1,31 +1,19 @@
-import { useGlobal } from "src/state/persist";
-import { useShallow } from "zustand/react/shallow";
+import { useSocket } from "src/state/socket";
+import { useAdverts } from "src/state/adverts";
 
 import { HiX } from "react-icons/hi";
-import "src/styles/banner.css";
-import { useSocket } from "src/state/socket";
+import Markdown from "react-markdown";
+import "src/styles/advert.css";
 
 const Advert = () => {
-  const [visible, setVisible] = useGlobal(
-    useShallow((state) => [state.advert, state.closeAdvert])
-  );
-
+  const adverts = useAdverts();
   const sockets = useSocket((state) => state.sockets);
 
   return (
     <>
-      {visible && (
-        <div className="banner">
-          <p>
-            <b>Note!</b> You can download the publicly available version{" "}
-            <code>7.40-CL-5046157</code>
-          </p>
-          <s></s>
-          <button className="close" onClick={() => setVisible(false)}>
-            <HiX />
-          </button>
-        </div>
-      )}
+      {Object.values(adverts.adverts).map((advert) => (
+        <Advertisement advert={advert} key={advert.id} />
+      ))}
       {(!sockets.has("main") || sockets.get("main") === null) && (
         <div className="banner socket">
           <p>
@@ -35,6 +23,35 @@ const Advert = () => {
         </div>
       )}
     </>
+  );
+};
+
+type AdvertisementProps = {
+  advert: Advert;
+};
+
+const Advertisement = (props: AdvertisementProps) => {
+  const close = useAdverts((s) => s.close);
+
+  return (
+    <div
+      className="banner"
+      style={{
+        backgroundImage: `radial-gradient(
+        circle at 50% -50%,
+        ${props.advert.c1} 0%,
+        ${props.advert.c2} 100%
+      )`,
+      }}
+    >
+      <Markdown>{props.advert.title}</Markdown>
+      <s></s>
+      {props.advert.closeable && (
+        <button className="close" onClick={() => close(props.advert.id)}>
+          <HiX />
+        </button>
+      )}
+    </div>
   );
 };
 

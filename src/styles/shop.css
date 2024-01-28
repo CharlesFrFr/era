@@ -1,27 +1,3 @@
-span.queue-time {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 0.35rem;
-  padding: 0.5rem;
-  width: fit-content;
-  min-height: max-content;
-  margin-left: 0.5rem;
-  font-family: var(--font-header);
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--t2);
-  border-radius: 0.5rem;
-  background-color: var(--c0);
-}
-
-span.queue-time time {
-  font-family: var(--font-header);
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--t1);
-}
-
 .store-container {
   display: flex;
   flex-direction: column;

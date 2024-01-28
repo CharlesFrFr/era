@@ -15,6 +15,7 @@ const Servers = () => {
   const { data: queue } = useSuspenseQuery({
     queryKey: ["queue"],
     queryFn: queryInsights,
+    refetchInterval: 10000,
   });
 
   const filtered = Object.values(servers).filter(

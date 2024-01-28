@@ -162,6 +162,16 @@ type Queue = {
 
 //
 
+type Advert = {
+  id: string;
+  c1: string;
+  c2: string;
+  title: string;
+  closeable: boolean;
+};
+
+//
+
 type SocketPingDownEvent = [
   id: string,
   ref: string,

@@ -9,6 +9,10 @@ const Developer = () => {
     queryClient.clear();
   };
 
+  const clearLocalStorage = () => {
+    localStorage.clear();
+  };
+
   return (
     <>
       <div
@@ -27,6 +31,10 @@ const Developer = () => {
 
         <button className="button" onClick={clearCache}>
           clear cache
+        </button>
+
+        <button className="button" onClick={clearLocalStorage}>
+          clear local storage
         </button>
       </div>
     </>

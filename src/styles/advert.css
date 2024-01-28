@@ -19,8 +19,8 @@
 .banner.socket {
   background-image: radial-gradient(
     circle at 50% -50%,
-    #e63838 0%,
-    #a5680b 100%
+    #38e66c 0%,
+    #0b9ba5 100%
   );
 }
 
@@ -31,7 +31,7 @@
   max-height: 2rem;
 }
 
-.banner b {
+.banner strong {
   font-weight: 600;
 }
 
