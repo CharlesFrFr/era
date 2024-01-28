@@ -88,6 +88,12 @@ section.version-list .build p {
   color: var(--t3);
 }
 
+section.version-list .build .tags {
+  font-size: 0.6rem;
+  font-weight: 500;
+  color: var(--t3);
+}
+
 .downloads-wrapper section.download-status {
   display: flex;
   flex-direction: column;
