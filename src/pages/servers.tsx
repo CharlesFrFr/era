@@ -8,7 +8,7 @@ import "src/styles/servers.css";
 
 const Servers = () => {
   const { data: servers } = useSuspenseQuery({
-    queryKey: ["server"],
+    queryKey: ["servers"],
     queryFn: queryServers,
   });
 

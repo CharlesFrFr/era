@@ -162,6 +162,25 @@ type Queue = {
 
 //
 
+type Build = {
+  archive: null;
+  available: boolean;
+  build: string;
+  cdn_version: number;
+  icon: string;
+  manifest: null;
+  name: string;
+  next: boolean;
+  public: boolean;
+  season_number: number;
+  size: string;
+  splash: string;
+  type: string;
+  uuid: string;
+};
+
+//
+
 type Advert = {
   id: string;
   c1: string;

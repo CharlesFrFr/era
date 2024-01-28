@@ -9,7 +9,7 @@ import "src/styles/stats.css";
 
 const UserStats = () => {
   const { data: servers } = useSuspenseQuery({
-    queryKey: ["server"],
+    queryKey: ["servers"],
     queryFn: queryServers,
   });
   const nonMap = Object.values(servers).filter(

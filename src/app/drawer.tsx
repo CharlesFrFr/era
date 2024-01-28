@@ -9,9 +9,8 @@ import "src/styles/drawer.css";
 const Drawer = () => {
   const [show, set] = useState(false);
   const { data: servers } = useSuspenseQuery({
-    queryKey: ["server"],
+    queryKey: ["servers"],
     queryFn: queryServers,
-    // refetchInterval: 1000,
   });
   const filtered = Object.values(servers).filter(
     (server) => server.status === "online" && !server.private
@@ -27,16 +26,6 @@ const Drawer = () => {
       <DrawerItem label="Home" icon="FaHouse" path="/app/home" />
       {/* <DrawerItem label="Library" icon="FaFolder" path="/app/library" />*/}
       <DrawerItem
-        label="Shop"
-        icon="FaCartShopping"
-        path="/app/shop"
-        // info={{
-        //   style: "fire",
-        //   message: "NEW",
-        // }}
-      />
-      {/*<DrawerItem label="Downloads" icon="FaDownload" path="/app/downloads" /> */}
-      <DrawerItem
         label="Servers"
         icon="FaServer"
         path="/app/servers"
@@ -45,6 +34,16 @@ const Drawer = () => {
           message: filtered.length.toString(),
         }}
       />
+      <DrawerItem
+        label="Shop"
+        icon="FaCartShopping"
+        path="/app/shop"
+        // info={{
+        //   style: "fire",
+        //   message: "NEW",
+        // }}
+      />
+      <DrawerItem label="Downloads" icon="FaDownload" path="/app/downloads" />
       <DrawerItem
         label="Developer"
         icon="FaWandMagicSparkles"

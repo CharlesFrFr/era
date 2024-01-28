@@ -1,6 +1,6 @@
 import { AxiosError } from "axios";
 import { axiosClient } from "./client";
-import { useToken } from "src/state/me";
+import { useToken } from "src/state/token";
 
 type BannerResponse = {
   data: Array<Banner>;
@@ -206,6 +206,31 @@ export const insights = async () => {
           players: 0,
         },
       } as QueueResponse,
+      null,
+    ] as const;
+  }
+
+  return [response.data, null] as const;
+};
+
+type BuildsResponse = {
+  data: Build[];
+};
+
+export const builds = async () => {
+  const response = await axiosClient
+    .get<BuildsResponse>("/launcher/builds", {
+      headers: {
+        Authorization: `bearer ${useToken.getState().token}`,
+      },
+    })
+    .catch((error: AxiosError) => error);
+
+  if (response instanceof AxiosError || response === null) {
+    return [
+      {
+        data: [],
+      } as BuildsResponse,
       null,
     ] as const;
   }

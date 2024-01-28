@@ -132,10 +132,8 @@ section.app .page {
 section.app .page .children {
   display: flex;
   flex-direction: column;
-  /* gap: 1rem; */
-  padding-right: 0.5rem;
   border-radius: 0.35rem;
-  overflow: auto visible;
+  overflow: hidden auto;
 }
 
 a[href] {

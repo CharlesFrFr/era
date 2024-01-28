@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { useToken } from "src/state/me";
+import { useToken } from "src/state/token";
 import { queryClient } from "src/main";
 
 const eventDataTupleToObj = <T extends SocketDownEventType>(
@@ -182,13 +182,13 @@ export const useSocket = create<SocketState>((set, get) => ({
     });
 
     get().bind("server", "server:add", (event) =>
-      queryClient.setQueryData<Server[]>(["server"], (servers) => [
+      queryClient.setQueryData<Server[]>(["servers"], (servers) => [
         ...(servers || []),
         event.payload as Server,
       ])
     );
     get().bind("server", "server:update", (event) =>
-      queryClient.setQueryData<Server[]>(["server"], (servers) => {
+      queryClient.setQueryData<Server[]>(["servers"], (servers) => {
         const server = event.payload as Server;
         const serverIndex = servers?.findIndex(
           (s) => s.uuid === server.uuid && s.name === server.name
@@ -201,7 +201,7 @@ export const useSocket = create<SocketState>((set, get) => ({
       })
     );
     get().bind("server", "server:remove", (event) =>
-      queryClient.setQueryData<Server[]>(["server"], (servers) => {
+      queryClient.setQueryData<Server[]>(["servers"], (servers) => {
         const server = event.payload as Server;
         const serverIndex = servers?.findIndex(
           (s) => s.uuid === server.uuid && s.name === server.name

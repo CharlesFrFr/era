@@ -1,8 +1,8 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { useToken } from "src/state/me";
+import { useToken } from "src/state/token";
 
 const Developer = () => {
-  const { token, setToken } = useToken();
+  const { token, setter: setToken } = useToken();
 
   const queryClient = useQueryClient();
   const clearCache = () => {
