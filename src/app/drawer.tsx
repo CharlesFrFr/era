@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useServers } from "src/state/servers";
-import { useMe } from "src/state/me";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { queryServers, queryUser } from "src/external/wrapper";
 
 import { Link } from "@tanstack/react-router";
 import * as Icons from "react-icons/fa6";
@@ -8,11 +8,19 @@ import "src/styles/drawer.css";
 
 const Drawer = () => {
   const [show, set] = useState(false);
-  const servers = useServers((state) => state.servers);
-  const me = useMe((state) => state.era);
-  const filtered = Object.values(Object.fromEntries(servers)).filter(
+  const { data: servers } = useSuspenseQuery({
+    queryKey: ["server"],
+    queryFn: queryServers,
+    refetchInterval: 1000,
+  });
+  const filtered = Object.values(servers).filter(
     (server) => server.status === "online" && !server.private
   );
+
+  const { data: me } = useSuspenseQuery({
+    queryKey: ["me"],
+    queryFn: queryUser,
+  });
 
   return (
     <aside className="drawer">

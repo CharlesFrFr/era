@@ -6,10 +6,7 @@ import {
   Navigate,
   Outlet,
 } from "@tanstack/react-router";
-import { useFrontend } from "src/state/frontend";
-import { useMe } from "src/state/me";
 import { useSocket } from "src/state/socket";
-import { useServers } from "src/state/servers";
 
 import TauriFrame from "src/app/frame";
 import Drawer from "src/app/drawer";
@@ -21,6 +18,7 @@ import Library from "src/pages/library";
 import Servers from "src/pages/servers";
 import Shop from "src/pages/shop";
 import Developer from "src/pages/developer";
+import { Suspense } from "react";
 
 const rootRoute = new RootRoute({
   component: function RootRoute() {
@@ -37,24 +35,21 @@ const appRoute = new Route({
   path: "/app",
   component: () => (
     <section className="app">
-      <Drawer />
+      <Suspense fallback={null}>
+        <Drawer />
+      </Suspense>
       <div className="children page">
         <Advert />
         <div className="children">
-          <Outlet />
+          <Suspense fallback={null}>
+            <Outlet />
+          </Suspense>
         </div>
       </div>
     </section>
   ),
   beforeLoad: async () => {
-    const frontend = useFrontend.getState();
-    const user = useMe.getState();
-    const servers = useServers.getState();
     const socket = useSocket.getState();
-
-    !frontend.loaded && (await frontend.load());
-    !user.loaded && (await user.load());
-    !servers.loaded && (await servers.load());
     !socket.sockets.has("main") && (await socket.connectMain());
     !socket.sockets.has("server") && (await socket.connectServer());
   },

@@ -1,14 +1,21 @@
 import { useEffect, useState } from "react";
-import { useFrontend } from "src/state/frontend";
-import { useMe } from "src/state/me";
+import { queryShop, queryUser } from "src/external/wrapper";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import moment from "moment";
 
 import "src/styles/shop.css";
 
 const Shop = () => {
-  const store = useFrontend((state) => state.shop);
-  const vbucks = useMe((state) => state.era.currency);
   const [dateNow, setDateNow] = useState(Date.now());
+  const { data: store } = useSuspenseQuery({
+    queryKey: ["shop"],
+    queryFn: queryShop,
+  });
+
+  const { data: me } = useSuspenseQuery({
+    queryKey: ["me"],
+    queryFn: queryUser,
+  });
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -19,6 +26,14 @@ const Shop = () => {
   }, []);
 
   const featuredDays = moment(store.featured.expires_at).diff(dateNow, "days");
+  const featuredHours = moment(store.featured.expires_at).diff(
+    dateNow,
+    "hours"
+  );
+  const featuredMinutes = moment(store.featured.expires_at).diff(
+    dateNow,
+    "minutes"
+  );
 
   return (
     <div className="store-container">
@@ -30,7 +45,7 @@ const Shop = () => {
           draggable={false}
         />
         <span className="price">
-          {vbucks.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+          {me.currency.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
         </span>
       </div>
       <div className="store-wrapper">
@@ -41,20 +56,21 @@ const Shop = () => {
             <time>
               {featuredDays > 0
                 ? `${featuredDays} Days`
-                : moment(store.featured.expires_at).diff(dateNow, "hours") +
-                  " Hours"}
+                : featuredHours > 0
+                ? `${featuredHours} Hours`
+                : `${featuredMinutes} Minutes`}
             </time>
           </header>
           <div className="items">
             {store.featured.content.map((item) => (
-              <WeeklyItem item={item} />
+              <WeeklyItem item={item} key={item[0].item.name} />
             ))}
           </div>
         </div>
 
         <div className="store daily">
           <header>
-            <h3>FEATURED</h3>
+            <h3>DAILY</h3>
             <s />
             <time>
               {moment(store.featured.expires_at)
@@ -64,7 +80,7 @@ const Shop = () => {
           </header>
           <div className="items">
             {store.daily.content[0].map((item) => (
-              <DialyItem item={item} />
+              <DialyItem item={item} key={item.item.name} />
             ))}
           </div>
         </div>

@@ -1,16 +1,14 @@
 import { motion } from "framer-motion";
+import { Blurhash } from "react-blurhash";
 import { FaCalendar, FaClock, FaUser } from "react-icons/fa6";
 import Markdown from "react-markdown";
 
 type BannerProps = {
-  banner: {
-    precomputedBlur: React.ReactNode;
-    banner: Banner;
-  };
+  banner: Banner;
 };
 
 const FeaturedBanner = (props: BannerProps) => {
-  const banner = props.banner.banner;
+  const banner = props.banner;
   const backgroundUrlRaw = banner.meta.background.split("?")[0];
   const fileType = backgroundUrlRaw.split(".").pop();
   const mediaType = fileType === "mp4" ? "video" : "image";
@@ -20,7 +18,7 @@ const FeaturedBanner = (props: BannerProps) => {
   return (
     <div className="featured-event">
       <div className="background" style={banner.meta.background_styles}>
-        {props.banner.precomputedBlur}
+        <Blurhash hash={props.banner.meta.blurhash} />
 
         <motion.div
           initial={{ opacity: 0 }}

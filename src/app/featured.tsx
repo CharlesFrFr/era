@@ -1,16 +1,19 @@
-import { useEffect, useState } from "react";
-import { useFrontend } from "src/state/frontend";
+import { Suspense, useEffect, useState } from "react";
+import { queryBanners } from "src/external/wrapper";
+import { useSuspenseQuery } from "@tanstack/react-query";
 
 import "src/styles/featured.css";
 
 import { AnimatePresence, motion } from "framer-motion";
 import FeaturedBanner from "src/app/banner";
-import FeaturedShop from "./storefront";
+import FeaturedShop from "src/app/storefront";
 
 const FeaturedNews = () => {
   return (
     <section className="featured">
-      <EventWrapper />
+      <Suspense fallback={null}>
+        <EventWrapper />
+      </Suspense>
       <FeaturedShop />
     </section>
   );
@@ -18,7 +21,10 @@ const FeaturedNews = () => {
 
 const EventWrapper = () => {
   const [selected, setSelected] = useState(0);
-  const banners = useFrontend((state) => state.banners);
+  const { data: banners } = useSuspenseQuery({
+    queryKey: ["banners"],
+    queryFn: queryBanners,
+  });
 
   useEffect(() => {
     if (banners.length === 0) return;
@@ -49,7 +55,7 @@ const EventWrapper = () => {
               opacity: 0,
             }}
             className="animate-event left"
-            key={banners[selected].banner.meta.index}
+            key={banners[selected].meta.index}
           >
             <FeaturedBanner banner={banners[selected]} />
           </motion.div>

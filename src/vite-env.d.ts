@@ -77,6 +77,12 @@ type ShopStorefront = {
   expires_at: string;
 };
 
+type Shop = {
+  daily: ShopStorefront;
+  featured: ShopStorefront;
+  unique: string;
+};
+
 //
 
 type User = {

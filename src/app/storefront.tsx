@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { useFrontend } from "src/state/frontend";
+import { queryShop } from "src/external/wrapper";
+import { useSuspenseQuery } from "@tanstack/react-query";
 
 import { AnimatePresence, motion } from "framer-motion";
 import { FaClock } from "react-icons/fa6";
@@ -7,8 +8,12 @@ import moment from "moment";
 
 const FeaturedShop = () => {
   const [selected, setSelected] = useState(0);
-  const featured = useFrontend((state) => state.shop.featured);
-  const flat = featured.content.flat();
+
+  const { data: shop } = useSuspenseQuery({
+    queryKey: ["shop"],
+    queryFn: queryShop,
+  });
+  const flat = shop.featured.content.flat();
 
   useEffect(() => {
     if (flat.length === 0) return;
@@ -53,7 +58,7 @@ const FeaturedShop = () => {
                 </label>
                 <label className="itemTime">
                   <FaClock />
-                  {moment(featured.expires_at).fromNow()}
+                  {moment(shop.featured.expires_at).fromNow()}
                 </label>
               </div>
               <motion.div

@@ -1,12 +1,17 @@
-import { useServers } from "src/state/servers";
+import { Suspense } from "react";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { queryServers } from "src/external/wrapper";
 import { AnimatePresence, motion } from "framer-motion";
 
 import { FaUser } from "react-icons/fa6";
 import "src/styles/servers.css";
 
 const Servers = () => {
-  const servers = useServers((state) => state.servers);
-  const filtered = Object.values(Object.fromEntries(servers)).filter(
+  const { data: servers } = useSuspenseQuery({
+    queryKey: ["server"],
+    queryFn: queryServers,
+  });
+  const filtered = Object.values(servers).filter(
     (server) => server.status === "online" && !server.private
   );
 

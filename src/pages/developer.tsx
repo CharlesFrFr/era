@@ -1,9 +1,7 @@
-import { useFrontend } from "src/state/frontend";
 import { useToken } from "src/state/me";
 
 const Developer = () => {
   const { token, setToken } = useToken();
-  const load = useFrontend((state) => state.load);
 
   return (
     <>
@@ -18,10 +16,7 @@ const Developer = () => {
         <input
           type="text"
           value={token}
-          onChange={(e) => {
-            setToken(e.target.value);
-            load();
-          }}
+          onChange={(e) => setToken(e.target.value)}
         />
       </div>
     </>

@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { useToken } from "src/state/me";
-import { useServers } from "./servers";
+import { queryClient } from "src/main";
 
 const eventDataTupleToObj = <T extends SocketDownEventType>(
   tuple: GetEventDataFromSocketDownEventType<T>
@@ -182,13 +182,36 @@ export const useSocket = create<SocketState>((set, get) => ({
     });
 
     get().bind("server", "server:add", (event) =>
-      useServers.getState().add(event.payload as Server)
+      queryClient.setQueryData<Server[]>(["servers"], (servers) => [
+        ...(servers || []),
+        event.payload as Server,
+      ])
     );
     get().bind("server", "server:update", (event) =>
-      useServers.getState().update(event.payload as Server)
+      queryClient.setQueryData<Server[]>(["servers"], (servers) => {
+        const server = event.payload as Server;
+        const serverIndex = servers?.findIndex(
+          (s) => s.uuid === server.uuid && s.name === server.name
+        );
+        if (serverIndex === undefined || serverIndex === -1) return servers;
+
+        const newServers = [...(servers || [])];
+        newServers[serverIndex] = server;
+        return newServers;
+      })
     );
     get().bind("server", "server:remove", (event) =>
-      useServers.getState().remove(event.payload as Server)
+      queryClient.setQueryData<Server[]>(["servers"], (servers) => {
+        const server = event.payload as Server;
+        const serverIndex = servers?.findIndex(
+          (s) => s.uuid === server.uuid && s.name === server.name
+        );
+        if (serverIndex === undefined || serverIndex === -1) return servers;
+
+        const newServers = [...(servers || [])];
+        newServers.splice(serverIndex, 1);
+        return newServers;
+      })
     );
   },
   bind: (id, type, listener) => {

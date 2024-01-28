@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
-import { useFrontend } from "src/state/frontend";
 import { motion } from "framer-motion";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import moment from "moment";
 
 import { FaExternalLinkAlt } from "react-icons/fa";
@@ -12,6 +12,7 @@ import {
   FaChevronRight,
 } from "react-icons/fa6";
 import "src/styles/blogs.css";
+import { queryBlogs } from "src/external/wrapper";
 
 enum ScrollPosition {
   Left = "left",
@@ -21,8 +22,12 @@ enum ScrollPosition {
 
 const Blogs = () => {
   const container = useRef<HTMLDivElement>(null);
-  const blogs = useFrontend((state) => state.blogs);
   const [scrollPosition, move] = useState<ScrollPosition>(ScrollPosition.Left);
+
+  const { data: blogs } = useSuspenseQuery({
+    queryKey: ["blogs"],
+    queryFn: queryBlogs,
+  });
 
   const handleOnScroll = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
     const target = e.target as HTMLDivElement;

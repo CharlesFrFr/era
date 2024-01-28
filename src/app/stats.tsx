@@ -1,5 +1,5 @@
-import { useMe } from "src/state/me";
-import { useServers } from "src/state/servers";
+import { queryServers, queryStats, queryUser } from "src/external/wrapper";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import moment from "moment";
 
 import { Link } from "@tanstack/react-router";
@@ -8,9 +8,11 @@ import * as Icons from "react-icons/fa6";
 import "src/styles/stats.css";
 
 const UserStats = () => {
-  const me = useMe();
-  const servers = useServers((state) => state.servers);
-  const nonMap = Object.values(Object.fromEntries(servers)).filter(
+  const { data: servers } = useSuspenseQuery({
+    queryKey: ["server"],
+    queryFn: queryServers,
+  });
+  const nonMap = Object.values(servers).filter(
     (server) => server.status === "online" && !server.private
   );
   const players = nonMap.reduce(
@@ -18,7 +20,15 @@ const UserStats = () => {
     0
   );
 
-  if (!me.loaded || me.era.uuid === "") return null;
+  const { data: me } = useSuspenseQuery({
+    queryKey: ["me"],
+    queryFn: queryUser,
+  });
+
+  const { data: stats } = useSuspenseQuery({
+    queryKey: ["stats"],
+    queryFn: queryStats,
+  });
 
   return (
     <div className="stats">
@@ -26,14 +36,14 @@ const UserStats = () => {
         <div className="stat user">
           <img
             src={
-              me.era.character.icon ??
+              me.character.icon ??
               "https://fortnite-api.com/images/cosmetics/br/cid_175_athena_commando_m_celestial/icon.png"
             }
             alt=""
             className="character"
           />
           <div className="welcome">
-            <h4>Hi, {me.era.username}!</h4>
+            <h4>Hi, {me.username}!</h4>
             <p>
               There are currently <strong>{nonMap.length}</strong> servers
               online, with a total of <strong>{players}</strong> players.
@@ -55,25 +65,25 @@ const UserStats = () => {
       </div>
       <div className="row wrap">
         <EqualStat
-          value={me.stats.kdr.toFixed(2).toString()}
+          value={stats.kdr.toFixed(2).toString()}
           description="Kill/Death Ratio"
           icon="FaSkull"
           color="red"
         />
         <EqualStat
-          value={me.stats.wins.toString()}
+          value={stats.wins.toString()}
           description="Lifetime Wins"
           icon="FaCrown"
           color="yellow"
         />
         <EqualStat
-          value={me.stats.matches.toString()}
+          value={stats.matches.toString()}
           description="Matches Played"
           icon="FaBook"
           color="blue"
         />
         <EqualStat
-          value={moment.utc(me.stats.time * 1000).format("hh:mm:ss")}
+          value={moment.utc(stats.time * 1000).format("hh:mm:ss")}
           description="Time Played"
           icon="FaClock"
           color="purple"
