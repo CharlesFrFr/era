@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useRef } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useGlobal } from "src/state/global";
 import { useShallow } from "zustand/react/shallow";
@@ -43,6 +43,16 @@ const FeaturedBanner = (props: BannerProps) => {
   const fileType = backgroundUrlRaw.split(".").pop();
   const mediaType = fileType === "mp4" ? "video" : "image";
 
+  const [currentTime, setCurrentTime] = useState(moment());
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTime(moment());
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   const [mutedBannerAudio, setMutedBannerAudio] = useGlobal(
     useShallow((s) => [s.mutedBannerAudio, s.setMutedBannerAudio])
   );
@@ -66,6 +76,7 @@ const FeaturedBanner = (props: BannerProps) => {
   console.log(extraBodyStyles, extraHeaderStyles, extraHeadlineStyles);
 
   const starts = moment.utc(banner.starts_at);
+  const duration = moment.duration(starts.diff(currentTime));
   const live = starts.isBefore(moment.utc());
 
   return (
@@ -123,7 +134,9 @@ const FeaturedBanner = (props: BannerProps) => {
               <>
                 <div className="loadingTimer waiting" />
                 {/* format in 00d 12h 32m 27s */}
-                <p>{starts.fromNow(true)}</p>
+                <p>{`${Math.floor(
+                  duration.asDays()
+                )}d ${duration.hours()}h ${duration.minutes()}m ${duration.seconds()}s`}</p>
               </>
             )}
           </div>
