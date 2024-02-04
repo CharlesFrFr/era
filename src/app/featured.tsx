@@ -30,7 +30,7 @@ const EventWrapper = () => {
     if (banners.length === 0) return;
     const interval = setInterval(() => {
       setSelected((s) => (s + 1) % banners.length);
-    }, 10000);
+    }, 20000);
 
     return () => clearInterval(interval);
   }, [selected, banners]);

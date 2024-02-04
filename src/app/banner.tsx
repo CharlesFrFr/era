@@ -1,5 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import { ReactNode, useEffect, useRef } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
+import { useGlobal } from "src/state/global";
+import { useShallow } from "zustand/react/shallow";
 import { queryInsights } from "src/external/wrapper";
 import { motion } from "framer-motion";
 import moment from "moment";
@@ -7,14 +9,16 @@ import moment from "moment";
 import { Blurhash } from "react-blurhash";
 import {
   FaCalendar,
+  FaTriangleExclamation,
   FaClock,
   FaUser,
   FaVolumeHigh,
   FaVolumeXmark,
+  FaCheck,
+  FaCircleExclamation,
+  FaCircleInfo,
 } from "react-icons/fa6";
 import Markdown from "react-markdown";
-import { useGlobal } from "src/state/global";
-import { useShallow } from "zustand/react/shallow";
 
 type BannerProps = {
   banner: Banner;
@@ -30,11 +34,6 @@ const FeaturedBanner = (props: BannerProps) => {
     useShallow((s) => [s.mutedBannerAudio, s.setMutedBannerAudio])
   );
   const audioRef = useRef<HTMLAudioElement>(null);
-
-  const { data: queue } = useSuspenseQuery({
-    queryKey: ["queue"],
-    queryFn: queryInsights,
-  });
 
   useEffect(() => {
     if (!audioRef.current) return;
@@ -85,34 +84,18 @@ const FeaturedBanner = (props: BannerProps) => {
         </motion.div>
       </div>
       <div className="tags">
-        {banner.meta.tags.find((t) => t === "players") && (
-          <div className="tag">
-            <FaUser />
-            {queue.players}
-          </div>
-        )}
-        {banner.meta.tags.find((t) => t === "queue") && (
-          <div className="tag">
-            <FaClock />
-            {moment
-              .utc(1000 * queue.average_queue_time.duration)
-              .format("mm:ss")}
-          </div>
-        )}
-        {banner.meta.tags.find((t) => t instanceof Array) && (
-          <div className="tag">
-            <FaCalendar />
-            {banner.meta.tags.find((t) => t instanceof Array)![2]}
-          </div>
-        )}
-        {banner.background === "generic_audio_video" && (
-          <button
-            className="muter"
-            onClick={() => setMutedBannerAudio(!mutedBannerAudio)}
-          >
-            {!mutedBannerAudio ? <FaVolumeHigh /> : <FaVolumeXmark />}
-          </button>
-        )}
+        {banner.meta.tags.map((tag, i) => (
+          <BannerTag tag={tag} key={i} />
+        ))}
+        {banner.background === "generic_audio_video" &&
+          banner.meta.shows_volume_control && (
+            <button
+              className="muter"
+              onClick={() => setMutedBannerAudio(!mutedBannerAudio)}
+            >
+              {!mutedBannerAudio ? <FaVolumeHigh /> : <FaVolumeXmark />}
+            </button>
+          )}
       </div>
       <div className="information">
         <span
@@ -140,6 +123,63 @@ const FeaturedBanner = (props: BannerProps) => {
         <s />
         <button>Launch</button>
       </div>
+    </div>
+  );
+};
+
+type BannerTagProps = {
+  tag: Banner["meta"]["tags"][number];
+};
+
+const BannerTag = (props: BannerTagProps) => {
+  const { data: queue } = useSuspenseQuery({
+    queryKey: ["queue"],
+    queryFn: queryInsights,
+  });
+
+  if (props.tag instanceof Array) return <SpecialBannerTag tag={props.tag} />;
+
+  const lookup: Record<string, ReactNode> = {
+    players: (
+      <>
+        <FaUser />
+        {queue.players}
+      </>
+    ),
+    queue: (
+      <>
+        <FaClock />
+        {moment.utc(1000 * queue.average_queue_time.duration).format("mm:ss")}
+      </>
+    ),
+  };
+
+  return <div className="tag">{lookup[props.tag]}</div>;
+};
+
+type SpecialBannerTagProps = {
+  tag: [
+    key: string,
+    type: "date" | "success" | "danger" | "info" | "warning",
+    value: string
+  ];
+};
+
+const SpecialBannerTag = (props: SpecialBannerTagProps) => {
+  const [_, type, value] = props.tag;
+
+  const lookup: Record<(typeof props.tag)[1], ReactNode> = {
+    date: <FaCalendar />,
+    warning: <FaTriangleExclamation />,
+    success: <FaCheck />,
+    danger: <FaCircleExclamation />,
+    info: <FaCircleInfo />,
+  };
+
+  return (
+    <div className={`tag ${type}`}>
+      {lookup[type]}
+      {value}
     </div>
   );
 };

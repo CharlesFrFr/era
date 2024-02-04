@@ -21,7 +21,11 @@ type EventBanner = {
     blurhash: string;
     index: number;
     shows_countdown: boolean;
-    tags: [[type: string, key: string, value: string]];
+    tags: [
+      key: string,
+      type: "date" | "success" | "danger" | "info" | "warning",
+      value: string
+    ][];
   };
   starts_at: string;
 };
