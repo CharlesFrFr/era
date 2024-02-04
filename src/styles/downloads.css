@@ -12,7 +12,7 @@
   gap: 0.5rem;
   width: 100%;
   height: 100%;
-  overflow-y: auto;
+  overflow: hidden auto;
 }
 
 .downloads-wrapper section.version-list .divider {
@@ -49,6 +49,7 @@ section.version-list .build {
   flex: 1;
   min-height: 10rem;
   overflow: hidden;
+  user-select: none;
   border-radius: 0.5rem;
   background-color: var(--c0);
 }
@@ -92,6 +93,58 @@ section.version-list .build .tags {
   font-size: 0.6rem;
   font-weight: 500;
   color: var(--t3);
+}
+
+section.version-list .build .buttons {
+  z-index: 2;
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 0.5rem;
+}
+
+section.version-list .build .buttons button {
+  position: relative;
+  padding: 0.65rem;
+  font-size: 0.85rem;
+  background-color: #00000020;
+}
+
+section.version-list .build .buttons button svg {
+  width: 1rem;
+  height: 1rem;
+  color: var(--t2);
+  transition: color 100ms;
+}
+
+section.version-list .build .buttons button:hover {
+  background-color: #00000080;
+}
+
+section.version-list .build .buttons button:hover svg {
+  color: var(--t1);
+}
+
+section.version-list .build .buttons button .hidden {
+  position: absolute;
+  bottom: 110%;
+  right: 0;
+  z-index: 2;
+  padding: 0.35rem 0.5rem;
+  width: fit-content;
+  border-radius: 0.25rem;
+  background-color: #0d121daa;
+  opacity: 0;
+  scale: 0.95;
+  pointer-events: none;
+  transition: opacity 100ms, scale 100ms;
+}
+
+section.version-list .build .buttons button:hover .hidden {
+  opacity: 1;
+  scale: 1;
 }
 
 .downloads-wrapper section.download-status {
