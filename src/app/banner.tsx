@@ -20,6 +20,19 @@ import {
 } from "react-icons/fa6";
 import Markdown from "react-markdown";
 
+const removeKeysFromObject = (obj: Record<string, any>, keys: string[]) => {
+  const clone = { ...obj };
+  keys.forEach((key) => {
+    delete clone[key];
+
+    if (key === "fontWeight") {
+      clone["filter"] = "brightness(1.2)";
+      clone["fontWeight"] = "600";
+    }
+  });
+  return clone;
+};
+
 type BannerProps = {
   banner: Banner;
 };
@@ -40,9 +53,20 @@ const FeaturedBanner = (props: BannerProps) => {
     audioRef.current.volume = 0.05;
   }, [audioRef]);
 
-  const extraBody_styles = banner.meta.hasOwnProperty("body_styles");
-  const extraHeaderStyles = banner.meta.hasOwnProperty("header_styles");
-  const extraHeadlineStyles = banner.meta.hasOwnProperty("headline_styles");
+  const extraBodyStyles =
+    banner.meta.hasOwnProperty("body_styles") &&
+    removeKeysFromObject(banner.meta.body_styles, ["fontFamily", "fontWeight"]);
+  const extraHeaderStyles =
+    banner.meta.hasOwnProperty("header_styles") &&
+    removeKeysFromObject(banner.meta.header_styles, ["fontFamily"]);
+  const extraHeadlineStyles =
+    banner.meta.hasOwnProperty("headline_styles") &&
+    removeKeysFromObject(banner.meta.headline_styles, ["fontFamily"]);
+
+  console.log(extraBodyStyles, extraHeaderStyles, extraHeadlineStyles);
+
+  const starts = moment.utc(banner.starts_at);
+  const live = starts.isBefore(moment.utc());
 
   return (
     <div className="featured-event">
@@ -87,6 +111,23 @@ const FeaturedBanner = (props: BannerProps) => {
         {banner.meta.tags.map((tag, i) => (
           <BannerTag tag={tag} key={i} />
         ))}
+        <s />
+        {banner.meta.shows_countdown && (
+          <div className="tag starting">
+            {live ? (
+              <>
+                <div className="loadingTimer live" />
+                <p>Live now!</p>
+              </>
+            ) : (
+              <>
+                <div className="loadingTimer waiting" />
+                {/* format in 00d 12h 32m 27s */}
+                <p>{starts.fromNow(true)}</p>
+              </>
+            )}
+          </div>
+        )}
         {banner.background === "generic_audio_video" &&
           banner.meta.shows_volume_control && (
             <button
@@ -98,22 +139,13 @@ const FeaturedBanner = (props: BannerProps) => {
           )}
       </div>
       <div className="information">
-        <span
-          className="header"
-          style={extraHeadlineStyles ? banner.meta.headline_styles : {}}
-        >
+        <span className="header" style={extraHeadlineStyles || {}}>
           {banner.build.season.name}
         </span>
-        <h2
-          className="title"
-          style={extraHeaderStyles ? banner.meta.header_styles : {}}
-        >
+        <h2 className="title" style={extraHeaderStyles || {}}>
           {banner.header}
         </h2>
-        <div
-          className="description"
-          style={extraBody_styles ? banner.meta.body_styles : {}}
-        >
+        <div className="description" style={extraBodyStyles || {}}>
           <Markdown>{banner.body}</Markdown>
         </div>
       </div>

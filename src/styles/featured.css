@@ -282,7 +282,42 @@ section.featured .featured-event * {
   min-width: 1rem;
 }
 
-.featured-event .tags .muter {
+.featured-event .tags .tag:has(.loadingTimer) {
+  padding: 0.25rem 0.5rem;
+  gap: 0.35rem;
+  user-select: none;
+}
+
+.featured-event .tags .tag .loadingTimer {
+  height: 0.7rem;
+  width: 0.7rem;
+  /* margin: 0.15rem; */
+  /* margin-bottom: 0.2rem; */
+  border-radius: 100%;
+  animation: flicker 2s infinite;
+}
+
+.featured-event .tags .tag .loadingTimer.live {
+  background-color: #e73131;
+}
+
+.featured-event .tags .tag .loadingTimer.waiting {
+  background-color: #e79831;
+}
+
+@keyframes flicker {
+  0% {
+    filter: brightness(0.8);
+  }
+  50% {
+    filter: brightness(1);
+  }
+  100% {
+    filter: brightness(0.8);
+  }
+}
+
+.featured-event .tags s {
   margin-left: auto;
 }
 
@@ -316,6 +351,10 @@ section.featured .featured-event * {
 
 .featured-event .description strong {
   font-weight: 700;
+}
+
+.featured-event .description p {
+  font-weight: inherit !important;
 }
 
 .featured-event .play {
