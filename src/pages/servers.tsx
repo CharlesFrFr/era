@@ -45,11 +45,14 @@ const Servers = () => {
               visible: { opacity: 1, transition: { staggerChildren: 0.05 } },
             }}
           >
-            {open.length > 0
-              ? open.map((server) => (
-                  <Server server={server} key={server.uuid} />
-                ))
-              : null}
+            {open.length > 0 ? (
+              open.map((server) => <Server server={server} key={server.uuid} />)
+            ) : (
+              <div className="server">
+                <h2>There are no open servers available.</h2>
+                <small>Please be patient!</small>
+              </div>
+            )}
           </motion.div>
         </div>
 
@@ -64,11 +67,16 @@ const Servers = () => {
               visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
             }}
           >
-            {open.length > 0
-              ? closed.map((server) => (
-                  <Server server={server} key={server.uuid} />
-                ))
-              : null}
+            {closed.length > 0 ? (
+              closed.map((server) => (
+                <Server server={server} key={server.uuid} />
+              ))
+            ) : (
+              <div className="server">
+                <h2>There are no servers currently in progress.</h2>
+                <small>Please be patient!</small>
+              </div>
+            )}
           </motion.div>
         </div>
       </div>

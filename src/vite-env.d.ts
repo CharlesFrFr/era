@@ -15,10 +15,10 @@ type EventBanner = {
   meta: {
     background: string;
     background_styles: Record<string, any>;
-    blurhash: string;
     body_styles: Record<string, any>;
     header_styles: Record<string, any>;
     headline_styles: Record<string, any>;
+    blurhash: string;
     index: number;
     shows_countdown: boolean;
     tags: [[type: string, key: string, value: string]];
@@ -42,6 +42,9 @@ type SeasonBanner = {
     audio: string;
     background: string;
     background_styles: Record<string, any>;
+    body_styles: Record<string, any>;
+    header_styles: Record<string, any>;
+    headline_styles: Record<string, any>;
     background_v: string;
     blurhash: string;
     coming_soon: boolean;

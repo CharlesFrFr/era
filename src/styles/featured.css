@@ -282,6 +282,10 @@ section.featured .featured-event * {
   min-width: 1rem;
 }
 
+.featured-event .tags .muter {
+  margin-left: auto;
+}
+
 .featured-event .information {
   display: flex;
   flex-direction: column;
