@@ -133,7 +133,6 @@ const FeaturedBanner = (props: BannerProps) => {
             ) : (
               <>
                 <div className="loadingTimer waiting" />
-                {/* format in 00d 12h 32m 27s */}
                 <p>{`${Math.floor(
                   duration.asDays()
                 )}d ${duration.hours()}h ${duration.minutes()}m ${duration.seconds()}s`}</p>
