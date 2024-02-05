@@ -1,0 +1,70 @@
+.build {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  gap: 0.5rem;
+  width: 100%;
+  flex: 1;
+  min-height: 10rem;
+  overflow: hidden;
+  user-select: none;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  background-color: var(--c0);
+}
+
+.build .icon {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 0.35rem;
+  background-position: center;
+  background-size: cover;
+}
+
+.build .splash {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+  aspect-ratio: 25 / 9;
+  background-size: cover;
+  background-position: center -5rem;
+  mask-image: linear-gradient(to left, #00000071 -50%, #00000000 100%);
+  opacity: 0.5;
+  transition: filter 200ms, opacity 200ms, mask-image 200ms;
+}
+
+.build:hover .splash {
+  filter: brightness(1);
+  opacity: 1;
+  mask-image: linear-gradient(to left, #000000 -50%, #00000000 100%);
+}
+
+.build.selected .splash {
+  filter: brightness(1.15);
+  opacity: 1;
+  mask-image: linear-gradient(to left, #000000 -50%, #00000000 100%);
+}
+
+.build h2 {
+  font-family: var(--font-header);
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--t1);
+}
+
+.build p {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--t3);
+}
+
+.build .tags {
+  font-size: 0.6rem;
+  font-weight: 500;
+  color: var(--t3);
+}
