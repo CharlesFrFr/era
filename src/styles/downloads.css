@@ -130,24 +130,24 @@ section.download-status .no-content h2 {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  padding: 0.75rem 1.5rem;
+  padding: 0.5rem 1.5rem;
   width: 100%;
   color: var(--t1);
   font-size: 1rem;
   cursor: pointer;
   border: none;
   border-radius: 0.5rem;
-  background-image: radial-gradient(
+  /* background-image: radial-gradient(
     circle at 50% -50%,
     #349451 0%,
     #0b9ba5 100%
-  );
+  ); */
 }
 
 .selected-build .download button:hover {
-  background-image: radial-gradient(
+  /* background-image: radial-gradient(
     circle at 50% -50%,
     #2e7e45 0%,
     #0a7a7f 100%
-  );
+  ); */
 }

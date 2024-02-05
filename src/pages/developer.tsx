@@ -1,3 +1,4 @@
+import { invoke } from "@tauri-apps/api";
 import { useQueryClient } from "@tanstack/react-query";
 import { useToken } from "src/state/token";
 
@@ -11,6 +12,18 @@ const Developer = () => {
 
   const clearLocalStorage = () => {
     localStorage.clear();
+  };
+
+  const downloadFile = async () => {
+    const result = await invoke<string>("download", {
+      request: {
+        url: "https://raw.githubusercontent.com/ectrc/snow/master/readme.md",
+        file_path: "readme.md",
+        expected_size: 1421,
+      },
+    });
+
+    console.log(result);
   };
 
   return (
@@ -35,6 +48,10 @@ const Developer = () => {
 
         <button className="button" onClick={clearLocalStorage}>
           clear local storage
+        </button>
+
+        <button className="button" onClick={downloadFile}>
+          download test file
         </button>
       </div>
     </>
