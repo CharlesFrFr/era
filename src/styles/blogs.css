@@ -179,6 +179,7 @@
   font-weight: 700;
   color: var(--t1);
   border-radius: 99rem;
+  backdrop-filter: blur(0.5rem);
   background-color: #00000050;
 }
 

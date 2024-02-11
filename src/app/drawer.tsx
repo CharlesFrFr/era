@@ -24,7 +24,7 @@ const Drawer = () => {
   return (
     <aside className="drawer">
       <DrawerItem label="Home" icon="FaHouse" path="/app/home" />
-      {/* <DrawerItem label="Library" icon="FaFolder" path="/app/library" />*/}
+      <DrawerItem label="Library" icon="FaFolder" path="/app/library" />
       <DrawerItem
         label="Servers"
         icon="FaServer"

@@ -8,6 +8,7 @@ import {
 } from "@tanstack/react-router";
 import { useSocket } from "src/state/socket";
 
+import { Suspense } from "react";
 import TauriFrame from "src/app/frame";
 import Drawer from "src/app/drawer";
 import Advert from "src/app/advert";
@@ -18,7 +19,6 @@ import Library from "src/pages/library";
 import Servers from "src/pages/servers";
 import Shop from "src/pages/shop";
 import Developer from "src/pages/developer";
-import { Suspense } from "react";
 
 const rootRoute = new RootRoute({
   component: function RootRoute() {
