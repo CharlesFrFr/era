@@ -3,7 +3,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useToken } from "src/state/token";
 
 const Developer = () => {
-  const { token, setter: setToken } = useToken();
+  const { token, setToken, working } = useToken();
 
   const queryClient = useQueryClient();
   const clearCache = () => {
@@ -22,8 +22,6 @@ const Developer = () => {
         expected_size: 1421,
       },
     });
-
-    console.log(result);
   };
 
   return (
@@ -53,6 +51,8 @@ const Developer = () => {
         <button className="button" onClick={downloadFile}>
           download test file
         </button>
+
+        <p>{working ? "TOKEN IS LIVE AND WORKING" : "not working"}</p>
       </div>
     </>
   );

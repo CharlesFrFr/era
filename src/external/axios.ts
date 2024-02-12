@@ -94,7 +94,7 @@ export const user = async () => {
           uuid: "",
         },
       } as UserResponse,
-      null,
+      "invalid",
     ] as const;
   }
 

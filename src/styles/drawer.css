@@ -2,7 +2,6 @@ aside.drawer {
   display: flex;
   flex-direction: column;
   padding: 1rem 0.75rem;
-  gap: 0.35rem;
   width: 14rem;
   background-color: var(--c2);
 }
@@ -13,12 +12,12 @@ aside.drawer a.item {
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 0.45rem 0.65rem;
+  padding: 0.5rem 0.65rem;
   gap: 0.5rem;
   cursor: pointer;
   color: var(--t3);
-  border-radius: 0.35rem;
-  transition: background-color 50ms, color 50ms;
+  border-radius: 0.5rem;
+  transition: background-color 150ms, color 150ms;
 }
 
 aside.drawer a.item:hover {
@@ -45,7 +44,7 @@ aside.drawer a.item .icon svg {
   width: 100%;
   height: 100%;
   fill: var(--t3);
-  transition: fill 50ms;
+  transition: fill 150ms;
 }
 
 aside.drawer a.item.now .icon svg {

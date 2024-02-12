@@ -2,13 +2,17 @@ import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 
 export const useToken = create<{
+  working: boolean;
   token: string;
-  setter: (s: string) => void;
+  setToken: (s: string) => void;
+  setWorking: (b: boolean) => void;
 }>()(
   persist(
     (set) => ({
+      working: false,
       token: "",
-      setter: (s: string) => set({ token: s }),
+      setToken: (s: string) => set({ token: s }),
+      setWorking: (b: boolean) => set({ working: b }),
     }),
     {
       name: "me",

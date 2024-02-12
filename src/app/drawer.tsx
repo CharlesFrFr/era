@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
+import { useToken } from "src/state/token";
 import { queryServers, queryUser } from "src/external/wrapper";
 
 import { Link } from "@tanstack/react-router";
@@ -16,10 +17,12 @@ const Drawer = () => {
     (server) => server.status === "online" && !server.private
   );
 
-  const { data: me } = useSuspenseQuery({
+  const { data: me, error } = useSuspenseQuery({
     queryKey: ["me"],
     queryFn: queryUser,
   });
+
+  if (error) return null;
 
   return (
     <aside className="drawer">
@@ -93,7 +96,10 @@ type DrawerItemProps = {
 };
 
 const DrawerItem = (props: DrawerItemProps) => {
+  const { working } = useToken();
   const Icon = Icons[props.icon];
+
+  if (props.path !== "/app/developer" && !working) return null;
 
   return (
     <Link

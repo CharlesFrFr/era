@@ -1,11 +1,15 @@
+import { useToken } from "src/state/token";
 import era from "./client";
 
 export const queryUser = async (): Promise<User> => {
   const [user, err] = await era.user();
 
   if (err) {
-    throw err;
+    useToken.getState().setWorking(false);
+    return user.data;
   }
+
+  useToken.getState().setWorking(true);
 
   return user.data;
 };
